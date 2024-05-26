@@ -19,3 +19,7 @@ texture = ExtResource("1_jlfm6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -96)
 shape = SubResource("RectangleShape2D_5n2xv")
+
+[node name="SelectionIndicator" type="Polygon2D" parent="."]
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(0, -136, -16, -168, 16, -168)
