@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://d2pob0ffnaeal"]
 
-[ext_resource type="Script" path="res://world.gd" id="1_qihp8"]
-[ext_resource type="Script" path="res://static_body_2d.gd" id="1_xt0pl"]
-[ext_resource type="PackedScene" uid="uid://cpx1ygw3suhcn" path="res://player.tscn" id="3_uj7fh"]
-[ext_resource type="PackedScene" uid="uid://b0lbpufbkorrc" path="res://enemy.tscn" id="4_jm3ck"]
+[ext_resource type="Script" path="res://Scripts/world.gd" id="1_qihp8"]
+[ext_resource type="Script" path="res://Scripts/static_body_2d.gd" id="1_xt0pl"]
+[ext_resource type="PackedScene" uid="uid://cpx1ygw3suhcn" path="res://Scenes/player.tscn" id="3_uj7fh"]
+[ext_resource type="PackedScene" uid="uid://b0lbpufbkorrc" path="res://Scenes/enemy.tscn" id="4_jm3ck"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_qihp8")
@@ -29,7 +29,7 @@ position = Vector2(896, 256)
 [node name="Player3" parent="Player-Controlled" instance=ExtResource("3_uj7fh")]
 position = Vector2(800, 512)
 
-[node name="Enemy" parent="." instance=ExtResource("4_jm3ck")]
-position = Vector2(128, 448)
-
 [node name="Enemies" type="Node" parent="."]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("4_jm3ck")]
+position = Vector2(128, 448)
