@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0lbpufbkorrc"]
+
+[ext_resource type="Texture2D" uid="uid://np03jsj2ptgx" path="res://icon.svg" id="1_1640v"]
+[ext_resource type="Script" path="res://enemy.gd" id="1_i0bmw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jtlig"]
+size = Vector2(64, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bu35a"]
+radius = 288.0
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_i0bmw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_1640v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+modulate = Color(0.7695, 0.81, 0, 1)
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_jtlig")
+
+[node name="PlayerDetectionRadius" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionRadius"]
+position = Vector2(0, -32)
+shape = SubResource("CircleShape2D_bu35a")
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(24, -32)
+target_position = Vector2(15, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(-25, -32)
+target_position = Vector2(-15, 0)
+
+[connection signal="body_entered" from="PlayerDetectionRadius" to="." method="_on_player_detection_radius_body_entered"]
+[connection signal="body_exited" from="PlayerDetectionRadius" to="." method="_on_player_detection_radius_body_exited"]

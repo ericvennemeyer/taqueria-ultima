@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2pob0ffnaeal"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_qihp8"]
+[ext_resource type="Script" path="res://static_body_2d.gd" id="1_xt0pl"]
+[ext_resource type="PackedScene" uid="uid://cpx1ygw3suhcn" path="res://player.tscn" id="3_uj7fh"]
+[ext_resource type="PackedScene" uid="uid://b0lbpufbkorrc" path="res://enemy.tscn" id="4_jm3ck"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_qihp8")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 0
+script = ExtResource("1_xt0pl")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-64, 544, 1024, 544, 1024, 0, 960, 0, 960, 192, 832, 192, 832, 256, 960, 256, 960.753, 448, 640, 448, 640, 384, 576, 384, 576, 320, 512, 320, 512, 256, 384.047, 256, 384, 320, 320, 320.237, 320, 384, 256, 384, 256, 448, 0, 448, 0, 192, 96, 192, 96, 128, 0, 128, 0, 0, -64, 0)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
+
+[node name="Player" parent="." instance=ExtResource("3_uj7fh")]
+position = Vector2(416, 320)
+
+[node name="Enemy" parent="." instance=ExtResource("4_jm3ck")]
+position = Vector2(128, 448)
+
+[node name="Enemy2" parent="." instance=ExtResource("4_jm3ck")]
+position = Vector2(840, 448)
+
+[node name="Enemy3" parent="." instance=ExtResource("4_jm3ck")]
+position = Vector2(864, 192)
+
+[node name="Enemy4" parent="." instance=ExtResource("4_jm3ck")]
+position = Vector2(64, 128)
