@@ -11,9 +11,10 @@ func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	
 	player_characters_array = player_controlled.get_children()
-	for player in player_characters_array:
+	for player: Player in player_characters_array:
 		if player.is_active:
 			current_player = player
+			current_player.selection_indicator.visible = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -32,7 +33,7 @@ func change_player_character():
 	print(current_player_index)
 	print(next_player_index)
 	current_player = player_characters_array[next_player_index]
-	for player in player_characters_array:
+	for player: Player in player_characters_array:
 		player.is_active = false
 		player.selection_indicator.visible = false
 	current_player.is_active = true
