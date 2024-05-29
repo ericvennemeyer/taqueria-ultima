@@ -38,11 +38,11 @@ position = Vector2(0, -32)
 shape = SubResource("CircleShape2D_bu35a")
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
-position = Vector2(8, -32)
+position = Vector2(8, -3)
 target_position = Vector2(15, 0)
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
-position = Vector2(-8, -32)
+position = Vector2(-8, -3)
 target_position = Vector2(-15, 0)
 
 [connection signal="body_entered" from="PlayerDetectionRadius" to="." method="_on_player_detection_radius_body_entered"]

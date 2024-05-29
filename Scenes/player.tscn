@@ -1,10 +1,48 @@
-[gd_scene load_steps=4 format=3 uid="uid://cpx1ygw3suhcn"]
+[gd_scene load_steps=11 format=3 uid="uid://cpx1ygw3suhcn"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_c0gef"]
 [ext_resource type="Texture2D" uid="uid://np03jsj2ptgx" path="res://icon.svg" id="1_jlfm6"]
+[ext_resource type="Texture2D" uid="uid://b623jjfraj4os" path="res://Assets/Sprites/1 Biker/Biker_idle.png" id="3_shtly"]
+[ext_resource type="Texture2D" uid="uid://c5imrr0yd6nfh" path="res://Assets/Icons/Crosshairs/crosshair022.png" id="4_uucvv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5n2xv"]
-size = Vector2(64, 64)
+size = Vector2(16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_231lg"]
+atlas = ExtResource("3_shtly")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3l6nh"]
+atlas = ExtResource("3_shtly")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vdsut"]
+atlas = ExtResource("3_shtly")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ct6ga"]
+atlas = ExtResource("3_shtly")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xrunp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_231lg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l6nh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vdsut")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ct6ga")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -12,15 +50,30 @@ collision_mask = 5
 script = ExtResource("1_c0gef")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(0, -96)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_jlfm6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -96)
+position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_5n2xv")
 
 [node name="SelectionIndicator" type="Polygon2D" parent="."]
 visible = false
+position = Vector2(0, 48)
 color = Color(1, 0, 0, 1)
 polygon = PackedVector2Array(0, -136, -16, -168, 16, -168)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(10, -24)
+sprite_frames = SubResource("SpriteFrames_xrunp")
+autoplay = "default"
+frame_progress = 0.02063
+
+[node name="SelectionIndicatorSprite" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 0, 0, 1)
+position = Vector2(8.52651e-14, -40)
+rotation = 3.14159
+texture = ExtResource("4_uucvv")
