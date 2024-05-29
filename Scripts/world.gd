@@ -30,8 +30,6 @@ func change_player_character():
 		next_player_index = current_player_index + 1
 		if next_player_index > player_characters_array.size() - 1:
 			next_player_index = 0
-	print(current_player_index)
-	print(next_player_index)
 	current_player = player_characters_array[next_player_index]
 	for player: Player in player_characters_array:
 		player.is_active = false
