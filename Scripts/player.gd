@@ -13,7 +13,7 @@ var on_ladder = false
 var is_climbing = false
 
 @onready var selection_indicator: Sprite2D = $SelectionIndicatorSprite
-@onready var animated_sprite_2d = $AnimatedSprite2D
+@onready var sprites: Node2D = $Sprites
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var starting_position = global_position
@@ -93,17 +93,13 @@ func apply_air_resistance(input_axis, delta):
 
 func update_animations(input_axis):
 	if input_axis != 0 and is_active:
-		animated_sprite_2d.flip_h = (input_axis < 0)
-		if animated_sprite_2d.flip_h:
-			animation_player.play("flipped_sprite_direction")
-		else:
-			animation_player.play("default_sprite_direction")
-		animated_sprite_2d.play("run")
+		sprites.scale.x = input_axis
+		animation_player.play("run")
 	elif is_climbing:
-		animated_sprite_2d.play("climb")
+		animation_player.play("climb")
 	else:
-		animated_sprite_2d.play("idle")
+		animation_player.play("idle")
 	
 	if not is_on_floor() and not is_climbing:
-		animated_sprite_2d.play("jump")
+		animation_player.play("jump")
 

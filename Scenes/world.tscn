@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bp6qgy6dr1edk" path="res://Assets/Tilesets/SCi-fi-Planet one Add ons v1.png" id="6_di7bd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3bssg"]
-size = Vector2(10, 197)
+size = Vector2(4, 197)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_okv2x"]
 texture = ExtResource("5_eayi0")
