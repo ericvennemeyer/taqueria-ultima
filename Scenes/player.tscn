@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cpx1ygw3suhcn"]
+[gd_scene load_steps=32 format=3 uid="uid://cpx1ygw3suhcn"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_c0gef"]
 [ext_resource type="Resource" uid="uid://daje6twscisj6" path="res://Resources/default_player_movement_data.tres" id="2_vxcgb"]
@@ -13,6 +13,61 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5n2xv"]
 size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxdjp"]
+size = Vector2(12, 27)
+
+[sub_resource type="Animation" id="Animation_a1uk6"]
+resource_name = "default_sprite_direction"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, -24)]
+}
+
+[sub_resource type="Animation" id="Animation_m1dtv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, -24)]
+}
+
+[sub_resource type="Animation" id="Animation_st1ge"]
+resource_name = "flipped_sprite_direction"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-11, -24)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2hfhq"]
+_data = {
+"RESET": SubResource("Animation_m1dtv"),
+"default_sprite_direction": SubResource("Animation_a1uk6"),
+"flipped_sprite_direction": SubResource("Animation_st1ge")
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_231lg"]
 atlas = ExtResource("3_shtly")
@@ -130,54 +185,16 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxdjp"]
-size = Vector2(12, 27)
-
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_c0gef")
 movement_data = ExtResource("2_vxcgb")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
+metadata/_edit_vertical_guides_ = [-10.0, 9.0]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -16)
+position = Vector2(-8.01086e-05, -16)
 shape = SubResource("RectangleShape2D_5n2xv")
-
-[node name="SelectionIndicator" type="Polygon2D" parent="."]
-visible = false
-position = Vector2(0, 48)
-color = Color(1, 0, 0, 1)
-polygon = PackedVector2Array(0, -136, -16, -168, 16, -168)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(10, -24)
-sprite_frames = SubResource("SpriteFrames_xrunp")
-animation = &"idle"
-autoplay = "idle"
-frame_progress = 0.0719028
-
-[node name="SelectionIndicatorSprite" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(1, 0, 0, 1)
-position = Vector2(-8.52651e-14, -44)
-rotation = 3.14159
-texture = ExtResource("4_uucvv")
-
-[node name="CoyoteJumpTimer" type="Timer" parent="."]
-wait_time = 0.05
-one_shot = true
-
-[node name="StatsComponent" type="Node" parent="."]
-script = ExtResource("7_3l0gb")
-health = 10
-
-[node name="HurtComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "hurtbox_component")]
-script = ExtResource("8_2pxht")
-stats_component = NodePath("../StatsComponent")
-hurtbox_component = NodePath("../HurtboxComponent")
 
 [node name="HurtboxComponent" type="Area2D" parent="."]
 script = ExtResource("9_irjgc")
@@ -204,3 +221,38 @@ value = 5.0
 show_percentage = false
 script = ExtResource("10_dl2uj")
 stats_component = NodePath("../StatsComponent")
+
+[node name="SelectionIndicatorSprite" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 0, 0, 1)
+position = Vector2(0, -44)
+rotation = 3.14159
+texture = ExtResource("4_uucvv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2hfhq")
+}
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(10, -24)
+sprite_frames = SubResource("SpriteFrames_xrunp")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.0719028
+
+[node name="CoyoteJumpTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="StatsComponent" type="Node" parent="."]
+script = ExtResource("7_3l0gb")
+health = 10
+
+[node name="HurtComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "hurtbox_component")]
+script = ExtResource("8_2pxht")
+stats_component = NodePath("../StatsComponent")
+hurtbox_component = NodePath("../HurtboxComponent")

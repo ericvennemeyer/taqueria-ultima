@@ -15,6 +15,7 @@ var was_wall_normal = Vector2.ZERO
 
 @onready var selection_indicator: Sprite2D = $SelectionIndicatorSprite
 @onready var animated_sprite_2d = $AnimatedSprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 #@onready var wall_jump_timer = $WallJumpTimer
 @onready var starting_position = global_position
@@ -102,6 +103,10 @@ func apply_air_resistance(input_axis, delta):
 func update_animations(input_axis):
 	if input_axis != 0 and is_active:
 		animated_sprite_2d.flip_h = (input_axis < 0)
+		if animated_sprite_2d.flip_h:
+			animation_player.play("flipped_sprite_direction")
+		else:
+			animation_player.play("default_sprite_direction")
 		animated_sprite_2d.play("run")
 	else:
 		animated_sprite_2d.play("idle")
