@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://cpx1ygw3suhcn"]
+[gd_scene load_steps=23 format=3 uid="uid://cpx1ygw3suhcn"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_c0gef"]
-[ext_resource type="Texture2D" uid="uid://np03jsj2ptgx" path="res://icon.svg" id="1_jlfm6"]
+[ext_resource type="Resource" uid="uid://daje6twscisj6" path="res://Resources/default_player_movement_data.tres" id="2_vxcgb"]
 [ext_resource type="Texture2D" uid="uid://b623jjfraj4os" path="res://Assets/Sprites/1 Biker/Biker_idle.png" id="3_shtly"]
 [ext_resource type="Texture2D" uid="uid://c5imrr0yd6nfh" path="res://Assets/Icons/Crosshairs/crosshair022.png" id="4_uucvv"]
+[ext_resource type="Texture2D" uid="uid://cam47bdmcs52v" path="res://Assets/Sprites/1 Biker/Biker_run.png" id="5_dasb8"]
+[ext_resource type="Texture2D" uid="uid://ckhoyssf0y8fx" path="res://Assets/Sprites/1 Biker/Biker_jump.png" id="5_eatjc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5n2xv"]
 size = Vector2(16, 32)
@@ -24,6 +26,46 @@ region = Rect2(96, 0, 48, 48)
 atlas = ExtResource("3_shtly")
 region = Rect2(144, 0, 48, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rcrd"]
+atlas = ExtResource("5_eatjc")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqn8a"]
+atlas = ExtResource("5_eatjc")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rok8e"]
+atlas = ExtResource("5_eatjc")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yk1g2"]
+atlas = ExtResource("5_eatjc")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ge38a"]
+atlas = ExtResource("5_dasb8")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2os8q"]
+atlas = ExtResource("5_dasb8")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j53gf"]
+atlas = ExtResource("5_dasb8")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4u3lv"]
+atlas = ExtResource("5_dasb8")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1eew5"]
+atlas = ExtResource("5_dasb8")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcniy"]
+atlas = ExtResource("5_dasb8")
+region = Rect2(240, 0, 48, 48)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_xrunp"]
 animations = [{
 "frames": [{
@@ -40,20 +82,58 @@ animations = [{
 "texture": SubResource("AtlasTexture_ct6ga")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rcrd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqn8a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rok8e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yk1g2")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ge38a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2os8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j53gf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4u3lv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1eew5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vcniy")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
 }]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_c0gef")
+movement_data = ExtResource("2_vxcgb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(0, -96)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_jlfm6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -16)
@@ -68,8 +148,9 @@ polygon = PackedVector2Array(0, -136, -16, -168, 16, -168)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(10, -24)
 sprite_frames = SubResource("SpriteFrames_xrunp")
-autoplay = "default"
-frame_progress = 0.02063
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.0719028
 
 [node name="SelectionIndicatorSprite" type="Sprite2D" parent="."]
 visible = false
@@ -77,3 +158,7 @@ modulate = Color(1, 0, 0, 1)
 position = Vector2(8.52651e-14, -40)
 rotation = 3.14159
 texture = ExtResource("4_uucvv")
+
+[node name="CoyoteJumpTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
