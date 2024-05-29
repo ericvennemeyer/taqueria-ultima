@@ -101,5 +101,8 @@ func update_animations(input_axis):
 		animation_player.play("idle")
 	
 	if not is_on_floor() and not is_climbing:
-		animation_player.play("jump")
+		if not air_jump:
+			animation_player.play("double_jump")
+		else:
+			animation_player.play("jump")
 
