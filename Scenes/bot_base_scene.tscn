@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://c76tontoxnues"]
+
+[ext_resource type="Script" path="res://Components/hurtbox_component.gd" id="3_mvron"]
+[ext_resource type="Script" path="res://Scripts/health_bar.gd" id="4_sfi3y"]
+[ext_resource type="Texture2D" uid="uid://c5imrr0yd6nfh" path="res://Assets/Icons/Crosshairs/crosshair022.png" id="5_7jqpp"]
+[ext_resource type="Script" path="res://Components/stats_component.gd" id="20_3re0j"]
+[ext_resource type="Script" path="res://Components/hurt_component.gd" id="21_5scgv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5n2xv"]
+resource_local_to_scene = true
+size = Vector2(14, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxdjp"]
+resource_local_to_scene = true
+size = Vector2(9, 15.5)
+
+[node name="Bot" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+metadata/_edit_vertical_guides_ = []
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-8.01086e-05, -16)
+shape = SubResource("RectangleShape2D_5n2xv")
+
+[node name="HurtboxComponent" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("3_mvron")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -15.5)
+shape = SubResource("RectangleShape2D_qxdjp")
+
+[node name="HealthBar" type="ProgressBar" parent="." node_paths=PackedStringArray("stats_component")]
+modulate = Color(1, 0, 0, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -40.0
+offset_right = 16.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+max_value = 10.0
+step = 1.0
+value = 5.0
+show_percentage = false
+script = ExtResource("4_sfi3y")
+stats_component = NodePath("../StatsComponent")
+
+[node name="SelectionIndicatorSprite" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(0, -45)
+rotation = 3.14159
+texture = ExtResource("5_7jqpp")
+
+[node name="StatsComponent" type="Node" parent="."]
+script = ExtResource("20_3re0j")
+health = 10
+
+[node name="HurtComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "hurtbox_component")]
+script = ExtResource("21_5scgv")
+stats_component = NodePath("../StatsComponent")
+hurtbox_component = NodePath("../HurtboxComponent")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprites"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
