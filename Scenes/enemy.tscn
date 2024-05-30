@@ -1,13 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0lbpufbkorrc"]
+[gd_scene load_steps=12 format=3 uid="uid://b0lbpufbkorrc"]
 
 [ext_resource type="Texture2D" uid="uid://np03jsj2ptgx" path="res://icon.svg" id="1_1640v"]
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_i0bmw"]
+[ext_resource type="Script" path="res://Components/hurt_component.gd" id="3_pn0vv"]
+[ext_resource type="Script" path="res://Components/hurtbox_component.gd" id="4_3y1y5"]
+[ext_resource type="Script" path="res://Components/stats_component.gd" id="5_mcvdv"]
+[ext_resource type="Script" path="res://Components/destroyed_component.gd" id="6_lw3rb"]
+[ext_resource type="Script" path="res://Components/spawner_component.gd" id="7_bnst4"]
+[ext_resource type="PackedScene" uid="uid://bnct4qkyw47hw" path="res://Scenes/explosion_effect.tscn" id="8_w3tky"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jtlig"]
 size = Vector2(32, 56)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bu35a"]
 radius = 247.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d8upa"]
+size = Vector2(28, 44)
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4
@@ -44,6 +53,33 @@ target_position = Vector2(15, 0)
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(-8, -3)
 target_position = Vector2(-15, 0)
+
+[node name="HurtComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "hurtbox_component")]
+script = ExtResource("3_pn0vv")
+stats_component = NodePath("../StatsComponent")
+hurtbox_component = NodePath("../HurtboxComponent")
+
+[node name="HurtboxComponent" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("4_3y1y5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -22)
+shape = SubResource("RectangleShape2D_d8upa")
+
+[node name="StatsComponent" type="Node" parent="."]
+script = ExtResource("5_mcvdv")
+
+[node name="DestroyedComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "stats_component", "destroy_effect_spawner_component")]
+script = ExtResource("6_lw3rb")
+actor = NodePath("..")
+stats_component = NodePath("../StatsComponent")
+destroy_effect_spawner_component = NodePath("../SpawnerComponent")
+
+[node name="SpawnerComponent" type="Node2D" parent="."]
+script = ExtResource("7_bnst4")
+scene = ExtResource("8_w3tky")
 
 [connection signal="body_entered" from="PlayerDetectionRadius" to="." method="_on_player_detection_radius_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionRadius" to="." method="_on_player_detection_radius_body_exited"]
