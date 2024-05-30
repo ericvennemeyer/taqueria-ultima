@@ -12,7 +12,6 @@ var was_wall_normal = Vector2.ZERO
 var on_ladder = false
 var is_climbing = false
 var is_attacking = false
-var fire_rate = 0.3
 var fire_rate_countdown = 0.0
 
 @onready var selection_indicator: Sprite2D = $SelectionIndicatorSprite
@@ -77,11 +76,12 @@ func handle_climb(vertical_input_axis):
 
 
 func handle_attack():
-	if Input.is_action_pressed("attack"):
+	if Input.is_action_pressed("attack") and not is_climbing:
 		is_attacking = true
 		if fire_rate_countdown < 0.0:
-			fire_rate_countdown = fire_rate
+			fire_rate_countdown = movement_data.fire_rate
 			fire_bullet()
+			position.x -= movement_data.knockback_amount * sprites.scale.x
 	else:
 		is_attacking = false
 

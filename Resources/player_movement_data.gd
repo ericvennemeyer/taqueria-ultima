@@ -9,3 +9,5 @@ extends Resource
 @export var gravity_scale = 1.0
 @export var air_resistance = 200.0
 @export var climb_velocity = -100.0
+@export var fire_rate = 0.3
+@export var knockback_amount: int = 5.0
