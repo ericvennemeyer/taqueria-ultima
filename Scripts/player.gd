@@ -11,14 +11,20 @@ var just_wall_jumped = false
 var was_wall_normal = Vector2.ZERO
 var on_ladder = false
 var is_climbing = false
+var is_attacking = false
+var fire_rate = 0.3
+var fire_rate_countdown = 0.0
 
 @onready var selection_indicator: Sprite2D = $SelectionIndicatorSprite
 @onready var sprites: Node2D = $Sprites
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var starting_position = global_position
+@onready var spawner_component: SpawnerComponent = $Sprites/SpawnerComponent
+
 
 func _physics_process(delta):
+	fire_rate_countdown -= delta
 	if not on_ladder:
 		apply_gravity(delta)
 	var input_axis = Input.get_axis("move_left", "move_right")
@@ -27,6 +33,7 @@ func _physics_process(delta):
 		handle_jump()
 		handle_acceleration(input_axis, delta)
 		handle_air_acceleration(input_axis, delta)
+		handle_attack()
 		handle_climb(vertical_input_axis)
 	else:
 		input_axis = 0
@@ -69,6 +76,21 @@ func handle_climb(vertical_input_axis):
 		is_climbing = false
 
 
+func handle_attack():
+	if Input.is_action_pressed("attack"):
+		is_attacking = true
+		if fire_rate_countdown < 0.0:
+			fire_rate_countdown = fire_rate
+			fire_bullet()
+	else:
+		is_attacking = false
+
+
+func fire_bullet():
+	var bullet = spawner_component.spawn()
+	bullet.move_component.velocity.x = bullet.move_component.velocity.x * sprites.scale.x
+
+
 func handle_acceleration(input_axis, delta):
 	if not is_on_floor(): return
 	if input_axis != 0:
@@ -94,15 +116,24 @@ func apply_air_resistance(input_axis, delta):
 func update_animations(input_axis):
 	if input_axis != 0 and is_active:
 		sprites.scale.x = input_axis
-		animation_player.play("run")
+		if is_attacking:
+			animation_player.play("run_attack")
+		else:
+			animation_player.play("run")
 	elif is_climbing:
 		animation_player.play("climb")
 	else:
-		animation_player.play("idle")
+		if is_attacking:
+			animation_player.play("idle_attack")
+		else:
+			animation_player.play("idle")
 	
 	if not is_on_floor() and not is_climbing:
 		if not air_jump:
 			animation_player.play("double_jump")
 		else:
-			animation_player.play("jump")
+			if is_attacking:
+				animation_player.play("jump_attack")
+			else:
+				animation_player.play("jump")
 

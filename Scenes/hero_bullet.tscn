@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://bgth4on0fwjle"]
+
+[ext_resource type="Texture2D" uid="uid://imau0b31y0w1" path="res://Assets/Sprites/projectiles/4_1.png" id="1_mbbmt"]
+[ext_resource type="Script" path="res://Scripts/hero_bullet.gd" id="1_yxt25"]
+[ext_resource type="Script" path="res://Components/hitbox_component.gd" id="2_qfdvn"]
+[ext_resource type="Script" path="res://Components/scale_component.gd" id="3_27b4e"]
+[ext_resource type="Script" path="res://Components/move_component.gd" id="4_ii4r3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bvbmb"]
+size = Vector2(6, 4)
+
+[node name="HeroBullet" type="Node2D"]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_yxt25")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_mbbmt")
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("2_qfdvn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("RectangleShape2D_bvbmb")
+
+[node name="ScaleComponent" type="Node" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("3_27b4e")
+sprite = NodePath("../Sprite2D")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.3, 0.2)
+
+[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("4_ii4r3")
+actor = NodePath("..")
+velocity = Vector2(400, 2.08165e-12)
