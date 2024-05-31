@@ -8,7 +8,7 @@ extends Area2D
 # Create a signal for when the hitbox hits a hurtbox
 signal hit_hurtbox(hurtbox)
 
-var is_active = false
+var is_active = true
 
 func _ready():
 	# Connect on area entered to our hurtbox entered function

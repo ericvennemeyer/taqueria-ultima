@@ -12,18 +12,24 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_attacking = false
 var fire_rate_countdown = 0.0
 
+var is_alive = true
+
 @onready var selection_indicator: Sprite2D = $SelectionIndicatorSprite
 @onready var sprites: Node2D = $Sprites
 @onready var sprite_2d: Sprite2D = $Sprites/Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var ghost_timer: Timer = $GhostTimer
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 
 
 func _ready() -> void:
+	hurtbox_component.hurt.connect(handle_hurt.unbind(1))
 	ghost_timer.timeout.connect(add_ghost_image)
 
 
 func _physics_process(delta):
+	if not is_alive: return
+	
 	fire_rate_countdown -= delta
 	apply_gravity(delta)
 	var input_axis = Input.get_axis("move_left", "move_right")
@@ -34,7 +40,8 @@ func _physics_process(delta):
 		input_axis = 0
 	apply_friction(input_axis, delta)
 	move_and_slide()
-	update_animations(input_axis)
+	if is_active:
+		update_animations(input_axis)
 
 
 func apply_gravity(delta):
@@ -60,6 +67,13 @@ func add_ghost_image():
 	get_tree().current_scene.add_child(ghost_image)
 
 
+func handle_hurt():
+	is_active = false
+	if is_alive:
+		hurtbox_component.is_invincible = true
+		animation_player.play("hurt")
+
+
 func handle_acceleration(input_axis, delta):
 	if not is_on_floor() or is_attacking: return
 	if input_axis != 0:
@@ -79,3 +93,9 @@ func update_animations(input_axis):
 		animation_player.play("attack")
 	else:
 		animation_player.play("idle")
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "hurt":
+		is_active = true
+		hurtbox_component.is_invincible = false

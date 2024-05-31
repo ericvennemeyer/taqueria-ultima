@@ -9,18 +9,24 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_attacking = false
 var fire_rate_countdown = 0.0
 
+var is_alive = true
+
 @onready var selection_indicator: Sprite2D = $SelectionIndicatorSprite
 @onready var sprites: Node2D = $Sprites
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var attack_duration_timer: Timer = $AttackDurationTimer
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 
 
 func _ready() -> void:
+	hurtbox_component.hurt.connect(handle_hurt.unbind(1))
 	attack_duration_timer.timeout.connect(stop_attack)
 
 
 func _physics_process(delta):
+	if not is_alive: return
+	
 	fire_rate_countdown -= delta
 	var input_axis = Input.get_axis("move_left", "move_right")
 	var vertical_input_axis = Input.get_axis("climb_down", "climb_up")
@@ -31,7 +37,8 @@ func _physics_process(delta):
 		input_axis = 0
 	apply_air_resistance(input_axis, vertical_input_axis, delta)
 	move_and_slide()
-	update_animations(input_axis)
+	if is_active:
+		update_animations(input_axis)
 
 
 func handle_attack():
@@ -46,6 +53,13 @@ func stop_attack():
 	is_attacking = false
 	hitbox_component.is_active = false
 	fire_rate_countdown = movement_data.fire_rate
+
+
+func handle_hurt():
+	is_active = false
+	if is_alive:
+		hurtbox_component.is_invincible = true
+		animation_player.play("hurt")
 
 
 func handle_air_acceleration(input_axis, vertical_input_axis, delta):
@@ -70,3 +84,9 @@ func update_animations(input_axis):
 		animation_player.play("attack")
 	else:
 		animation_player.play("idle")
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "hurt":
+		is_active = true
+		hurtbox_component.is_invincible = false

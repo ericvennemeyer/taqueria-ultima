@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d2pob0ffnaeal"]
+[gd_scene load_steps=16 format=3 uid="uid://d2pob0ffnaeal"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_qihp8"]
 [ext_resource type="PackedScene" uid="uid://cpx1ygw3suhcn" path="res://Scenes/player.tscn" id="3_uj7fh"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d1wmq1ryxywku" path="res://Assets/Tilesets/SCi-fi assets planet one.png" id="5_eha45"]
 [ext_resource type="PackedScene" uid="uid://ct8ksffth41ph" path="res://Scenes/drone_bot.tscn" id="5_mxkri"]
 [ext_resource type="Texture2D" uid="uid://bp6qgy6dr1edk" path="res://Assets/Tilesets/SCi-fi-Planet one Add ons v1.png" id="6_di7bd"]
+[ext_resource type="PackedScene" uid="uid://b0lbpufbkorrc" path="res://Scenes/enemy.tscn" id="6_k62o8"]
 [ext_resource type="PackedScene" uid="uid://cj0dma3dx8ju" path="res://Scenes/tank_bot.tscn" id="7_7je4c"]
 [ext_resource type="PackedScene" uid="uid://cq5lqarmml37j" path="res://Scenes/slice_bot.tscn" id="8_kg5sa"]
 
@@ -651,18 +652,21 @@ script = ExtResource("1_qihp8")
 
 [node name="Player" parent="Player-Controlled" instance=ExtResource("3_uj7fh")]
 position = Vector2(320, 240)
-is_active = true
 
 [node name="TankBot" parent="Player-Controlled" instance=ExtResource("7_7je4c")]
-position = Vector2(216, 335)
+position = Vector2(443, 335)
 
 [node name="SliceBot" parent="Player-Controlled" instance=ExtResource("8_kg5sa")]
-position = Vector2(56, 335)
+position = Vector2(550, 335)
 
 [node name="DroneBot" parent="Player-Controlled" instance=ExtResource("5_mxkri")]
 position = Vector2(212, 152)
 
 [node name="Enemies" type="Node" parent="."]
+
+[node name="Enemy" parent="Enemies" node_paths=PackedStringArray("hurtbox_component") instance=ExtResource("6_k62o8")]
+position = Vector2(50, 335)
+hurtbox_component = NodePath("HurtboxComponent")
 
 [node name="Ladders" type="Node" parent="."]
 

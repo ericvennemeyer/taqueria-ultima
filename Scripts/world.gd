@@ -8,7 +8,7 @@ var current_player
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	RenderingServer.set_default_clear_color(Color.LIGHT_BLUE)
+	RenderingServer.set_default_clear_color(Color(0.20000000298023, 0.36078432202339, 0.35686275362968))
 	
 	player_characters_array = player_controlled.get_children()
 	for player in player_characters_array:

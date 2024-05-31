@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cpx1ygw3suhcn"]
+[gd_scene load_steps=40 format=3 uid="uid://cpx1ygw3suhcn"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_c0gef"]
 [ext_resource type="Resource" uid="uid://daje6twscisj6" path="res://Resources/default_player_movement_data.tres" id="2_vxcgb"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" path="res://Components/spawner_component.gd" id="20_2podf"]
 [ext_resource type="PackedScene" uid="uid://bgth4on0fwjle" path="res://Scenes/hero_bullet.tscn" id="21_2tudg"]
 [ext_resource type="Script" path="res://Components/border_bounce_component.gd" id="22_8x8n8"]
+[ext_resource type="Script" path="res://Components/destroyed_component.gd" id="24_h362q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5n2xv"]
 size = Vector2(16, 32)
@@ -872,7 +873,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
-z_index = 10
+z_index = 1
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_c0gef")
@@ -883,7 +884,7 @@ position = Vector2(-8.01086e-05, -16)
 shape = SubResource("RectangleShape2D_5n2xv")
 
 [node name="HurtboxComponent" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 2
 collision_mask = 4
 script = ExtResource("9_irjgc")
 
@@ -891,27 +892,7 @@ script = ExtResource("9_irjgc")
 position = Vector2(0, -15.5)
 shape = SubResource("RectangleShape2D_qxdjp")
 
-[node name="HealthBar" type="ProgressBar" parent="." node_paths=PackedStringArray("stats_component")]
-visible = false
-modulate = Color(1, 0, 0, 1)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -40.0
-offset_right = 16.0
-offset_bottom = -36.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.75, 0.75)
-max_value = 10.0
-step = 1.0
-value = 5.0
-show_percentage = false
-script = ExtResource("10_dl2uj")
-stats_component = NodePath("../StatsComponent")
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+[node name="HealthBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("stats_component")]
 z_index = 15
 anchors_preset = 8
 anchor_left = 0.5
@@ -932,6 +913,8 @@ value = 5.0
 texture_under = ExtResource("5_m1qhh")
 texture_progress = ExtResource("5_mjv6e")
 texture_progress_offset = Vector2(2.08165e-12, 2.08165e-12)
+script = ExtResource("10_dl2uj")
+stats_component = NodePath("../StatsComponent")
 
 [node name="SelectionIndicatorSprite" type="Sprite2D" parent="."]
 visible = false
@@ -979,6 +962,13 @@ stats_component = NodePath("../StatsComponent")
 hurtbox_component = NodePath("../HurtboxComponent")
 health_bar = NodePath("../HealthBar")
 
+[node name="DestroyedComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "stats_component")]
+script = ExtResource("24_h362q")
+actor = NodePath("..")
+stats_component = NodePath("../StatsComponent")
+
 [node name="BorderBounceComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("22_8x8n8")
 actor = NodePath("..")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

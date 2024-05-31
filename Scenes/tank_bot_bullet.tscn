@@ -42,9 +42,10 @@ sprite_frames = SubResource("SpriteFrames_1x47b")
 autoplay = "default"
 
 [node name="HitboxComponent" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 2
 collision_mask = 4
 script = ExtResource("3_ppl7h")
+damage = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 position = Vector2(0, 1.19209e-07)

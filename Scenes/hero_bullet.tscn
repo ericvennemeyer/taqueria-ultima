@@ -17,7 +17,7 @@ script = ExtResource("1_yxt25")
 texture = ExtResource("1_mbbmt")
 
 [node name="HitboxComponent" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 2
 collision_mask = 4
 script = ExtResource("2_qfdvn")
 

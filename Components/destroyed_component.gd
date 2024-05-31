@@ -17,5 +17,7 @@ func _ready() -> void:
 
 func destroy() -> void:
 	# create an effect (from the spawner component) and free the actor
-	destroy_effect_spawner_component.spawn(actor.global_position)
-	actor.queue_free()
+	if destroy_effect_spawner_component:
+		destroy_effect_spawner_component.spawn(actor.global_position)
+	actor.is_alive = false
+	actor.animation_player.play("death")

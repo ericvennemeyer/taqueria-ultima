@@ -262,18 +262,21 @@ movement_data = ExtResource("3_b860b")
 position = Vector2(0, -10.5)
 shape = SubResource("RectangleShape2D_wsdmc")
 
+[node name="HurtboxComponent" parent="." index="1"]
+collision_layer = 2
+
 [node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
 position = Vector2(0, -7.5)
 shape = SubResource("RectangleShape2D_13n5l")
 
-[node name="HealthBar" parent="." index="2" node_paths=PackedStringArray("stats_component")]
+[node name="SelectionIndicatorSprite" parent="." index="2"]
+visible = false
+position = Vector2(0, -37)
+
+[node name="HealthBar" parent="." index="3" node_paths=PackedStringArray("stats_component")]
 offset_top = -30.0
 offset_bottom = -26.0
 stats_component = NodePath("../StatsComponent")
-
-[node name="SelectionIndicatorSprite" parent="." index="3"]
-visible = false
-position = Vector2(0, -37)
 
 [node name="HurtComponent" parent="." index="5" node_paths=PackedStringArray("stats_component", "hurtbox_component", "health_bar")]
 stats_component = NodePath("../StatsComponent")
@@ -292,7 +295,7 @@ libraries = {
 autoplay = "idle"
 
 [node name="HitboxComponent" type="Area2D" parent="." index="8"]
-collision_layer = 0
+collision_layer = 2
 collision_mask = 4
 script = ExtResource("10_iwaik")
 
@@ -306,3 +309,9 @@ one_shot = true
 
 [node name="BorderBounceComponent" parent="." index="10" node_paths=PackedStringArray("actor")]
 actor = NodePath("..")
+
+[node name="DestroyedComponent" parent="." index="11" node_paths=PackedStringArray("actor", "stats_component")]
+actor = NodePath("..")
+stats_component = NodePath("../StatsComponent")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

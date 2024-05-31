@@ -1,9 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://c76tontoxnues"]
+[gd_scene load_steps=12 format=3 uid="uid://c76tontoxnues"]
 
+[ext_resource type="Texture2D" uid="uid://b6d31sqhbdr2r" path="res://Assets/Icons/Health Bars/UI_Flat_Filler_04.png" id="3_2b6fy"]
 [ext_resource type="Script" path="res://Components/hurtbox_component.gd" id="3_mvron"]
+[ext_resource type="Texture2D" uid="uid://c35mpl2b8p332" path="res://Assets/Icons/Health Bars/UI_Flat_Filler_03.png" id="4_ivo5l"]
 [ext_resource type="Script" path="res://Scripts/health_bar.gd" id="4_sfi3y"]
 [ext_resource type="Texture2D" uid="uid://c5imrr0yd6nfh" path="res://Assets/Icons/Crosshairs/crosshair022.png" id="5_7jqpp"]
 [ext_resource type="Script" path="res://Components/border_bounce_component.gd" id="6_13i84"]
+[ext_resource type="Script" path="res://Components/destroyed_component.gd" id="9_1cawn"]
 [ext_resource type="Script" path="res://Components/stats_component.gd" id="20_3re0j"]
 [ext_resource type="Script" path="res://Components/hurt_component.gd" id="21_5scgv"]
 
@@ -33,30 +36,35 @@ script = ExtResource("3_mvron")
 position = Vector2(0, -15.5)
 shape = SubResource("RectangleShape2D_qxdjp")
 
-[node name="HealthBar" type="ProgressBar" parent="." node_paths=PackedStringArray("stats_component")]
-modulate = Color(1, 0, 0, 1)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -40.0
-offset_right = 16.0
-offset_bottom = -36.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.75, 0.75)
-max_value = 10.0
-step = 1.0
-value = 5.0
-show_percentage = false
-script = ExtResource("4_sfi3y")
-stats_component = NodePath("../StatsComponent")
-
 [node name="SelectionIndicatorSprite" type="Sprite2D" parent="."]
 modulate = Color(1, 0, 0, 1)
 position = Vector2(0, -45)
 rotation = 3.14159
 texture = ExtResource("5_7jqpp")
+
+[node name="HealthBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("stats_component")]
+z_index = 15
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -53.0
+offset_right = 24.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 1)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+max_value = 10.0
+value = 5.0
+texture_under = ExtResource("3_2b6fy")
+texture_progress = ExtResource("4_ivo5l")
+texture_progress_offset = Vector2(2.08165e-12, 2.08165e-12)
+script = ExtResource("4_sfi3y")
+stats_component = NodePath("")
 
 [node name="StatsComponent" type="Node" parent="."]
 script = ExtResource("20_3re0j")
@@ -76,3 +84,8 @@ health_bar = NodePath("../HealthBar")
 
 [node name="BorderBounceComponent" type="Node" parent="."]
 script = ExtResource("6_13i84")
+
+[node name="DestroyedComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "stats_component")]
+script = ExtResource("9_1cawn")
+actor = NodePath("..")
+stats_component = NodePath("../StatsComponent")

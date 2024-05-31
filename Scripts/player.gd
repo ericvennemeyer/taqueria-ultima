@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 @export var movement_data: PlayerMovementData
-@export var is_active = false
+@export var is_active = true
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -14,14 +14,23 @@ var is_climbing = false
 var is_attacking = false
 var fire_rate_countdown = 0.0
 
+var is_alive = true
+
 @onready var selection_indicator: Sprite2D = $SelectionIndicatorSprite
 @onready var sprites: Node2D = $Sprites
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var spawner_component: SpawnerComponent = $Sprites/SpawnerComponent
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+
+
+func _ready() -> void:
+	hurtbox_component.hurt.connect(handle_hurt.unbind(1))
 
 
 func _physics_process(delta):
+	if not is_alive: return
+	
 	fire_rate_countdown -= delta
 	if not on_ladder:
 		apply_gravity(delta)
@@ -42,7 +51,8 @@ func _physics_process(delta):
 	var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
 	if just_left_ledge:
 		coyote_jump_timer.start()
-	update_animations(input_axis)
+	if is_active:
+		update_animations(input_axis)
 
 
 func apply_gravity(delta):
@@ -88,6 +98,13 @@ func handle_attack():
 func fire_bullet():
 	var bullet = spawner_component.spawn()
 	bullet.move_component.velocity.x = bullet.move_component.velocity.x * sprites.scale.x
+
+
+func handle_hurt():
+	is_active = false
+	if is_alive:
+		hurtbox_component.is_invincible = true
+		animation_player.play("hurt")
 
 
 func handle_acceleration(input_axis, delta):
@@ -136,3 +153,8 @@ func update_animations(input_axis):
 			else:
 				animation_player.play("jump")
 
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "hurt":
+		is_active = true
+		hurtbox_component.is_invincible = false

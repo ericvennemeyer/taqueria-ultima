@@ -9,12 +9,13 @@ extends Node
 @export var hurtbox_component: HurtboxComponent
 
 # Grab a health progress bar so we can update it
-@export var health_bar: ProgressBar
+@export var health_bar: TextureProgressBar
 
 func _ready() -> void:
 	# Connect the hurt signal on the hurtbox component to an anonymous function
 	# that removes health equal to the damage from the hitbox
 	hurtbox_component.hurt.connect(func(hitbox_component: HitboxComponent):
 		stats_component.health -= hitbox_component.damage
-		health_bar.update_health_display(stats_component.health)
+		if health_bar:
+			health_bar.update_health_display(stats_component.health)
 	)
