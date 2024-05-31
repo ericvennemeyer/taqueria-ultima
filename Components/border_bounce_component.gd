@@ -2,6 +2,8 @@
 class_name BorderBounceComponent
 extends Node
 
+signal bounce
+
 # The margin is used to allow actors to bounce before reaching the edge of the border
 @export var margin: = 8
 
@@ -28,6 +30,7 @@ func _process(delta: float) -> void:
 		# This wall normal is the direction of the face of the wall
 		# (it's a bit counter intuitive but a wall on the left would have a wall face with a normal of RIGHT)
 		actor.velocity = actor.velocity.bounce(Vector2.RIGHT)
+		bounce.emit()
 	# If the actor's x position is greater than the right border plus the margin,
 	# bounce off the right side of the screen
 	elif actor.global_position.x > right_border - margin:
@@ -37,6 +40,7 @@ func _process(delta: float) -> void:
 		# This wall normal is the direction of the face of the wall
 		# (it's a bit counter intuitive but a wall on the right would have a wall face with a normal of LEFT)
 		actor.velocity = actor.velocity.bounce(Vector2.LEFT)
+		bounce.emit()
 	elif actor.global_position.y < top_border + margin * 3:
 		actor.global_position.y = top_border + margin * 3
 		actor.velocity = actor.velocity.bounce(Vector2.DOWN)

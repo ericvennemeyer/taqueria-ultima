@@ -1,11 +1,10 @@
 class_name Enemy
 extends CharacterBody2D
 
-const SPEED = 200.0
-const JUMP_VELOCITY = -400.0
+const SPEED = 100.0
+const JUMP_VELOCITY = -300.0
 
-@onready var sprites: Node2D = $Sprites
-@export var hurtbox_component: HurtboxComponent
+@export var run_direction = 1
 
 var player
 var is_active = true
@@ -14,10 +13,16 @@ var is_alive = true
 @onready var ray_cast_right: RayCast2D = $RayCastRight
 @onready var ray_cast_left: RayCast2D = $RayCastLeft
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var sprites: Node2D = $Sprites
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var border_bounce_component: BorderBounceComponent = $BorderBounceComponent
 
 
 func _ready() -> void:
 	hurtbox_component.hurt.connect(handle_hurt.unbind(1))
+	border_bounce_component.bounce.connect(func():
+			run_direction *= -1
+	)
 
 
 func _physics_process(delta: float) -> void:
@@ -32,13 +37,16 @@ func _physics_process(delta: float) -> void:
 
 		if player:
 			velocity.x = position.direction_to(player.position).x * SPEED
+		else:
+			velocity.x = run_direction * SPEED
+		
+		if velocity.x != 0.0:
 			if velocity.x > 0.0:
 				sprites.scale.x = 1
 			elif velocity.x < 0.0:
 				sprites.scale.x = -1
 			animation_player.play("walk")
 		else:
-			velocity.x = 0.0
 			animation_player.play("idle")
 
 	move_and_slide()
@@ -63,12 +71,15 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "hurt":
 		is_active = true
 		hurtbox_component.is_invincible = false
+	elif anim_name == "death":
+		set_collision_layer_value(3, false)
 
 
 func _on_attack_detection_zone_body_entered(body: Node2D) -> void:
-	is_active = false
-	velocity.x = 0.0
-	animation_player.play("attack")
+	if is_alive and body.is_alive:
+		is_active = false
+		velocity.x = 0.0
+		animation_player.play("attack")
 
 
 func _on_attack_detection_zone_body_exited(body: Node2D) -> void:

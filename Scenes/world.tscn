@@ -216,8 +216,6 @@ texture = ExtResource("5_eayi0")
 6:12/0 = 0
 6:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 7, 8, 7, 8, 8, -8, 8)
 7:12/0 = 0
-7:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -8, 4, -8, 4, -5, -5, -5)
-7:12/0/physics_layer_0/polygon_0/one_way = true
 8:12/0 = 0
 9:12/0 = 0
 10:12/0 = 0
@@ -654,19 +652,18 @@ script = ExtResource("1_qihp8")
 position = Vector2(320, 240)
 
 [node name="TankBot" parent="Player-Controlled" instance=ExtResource("7_7je4c")]
-position = Vector2(443, 335)
+position = Vector2(461, 208)
 
 [node name="SliceBot" parent="Player-Controlled" instance=ExtResource("8_kg5sa")]
-position = Vector2(550, 335)
+position = Vector2(508, 208)
 
 [node name="DroneBot" parent="Player-Controlled" instance=ExtResource("5_mxkri")]
 position = Vector2(212, 152)
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="Enemy" parent="Enemies" node_paths=PackedStringArray("hurtbox_component") instance=ExtResource("6_k62o8")]
+[node name="Enemy" parent="Enemies" instance=ExtResource("6_k62o8")]
 position = Vector2(50, 335)
-hurtbox_component = NodePath("HurtboxComponent")
 
 [node name="Ladders" type="Node" parent="."]
 

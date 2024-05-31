@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b0lbpufbkorrc"]
+[gd_scene load_steps=27 format=3 uid="uid://b0lbpufbkorrc"]
 
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_i0bmw"]
 [ext_resource type="Texture2D" uid="uid://b2l11gewp6kpr" path="res://Assets/Sprites/Enemies/Baseball bat dude/Idle.png" id="2_eu3bo"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://Components/spawner_component.gd" id="7_bnst4"]
 [ext_resource type="Script" path="res://Components/hitbox_component.gd" id="7_rks6y"]
 [ext_resource type="PackedScene" uid="uid://bnct4qkyw47hw" path="res://Scenes/explosion_effect.tscn" id="8_w3tky"]
+[ext_resource type="Script" path="res://Components/border_bounce_component.gd" id="14_r5ys2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jtlig"]
 size = Vector2(16, 31)
@@ -293,17 +294,16 @@ size = Vector2(21, 32)
 size = Vector2(20, 14)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bu35a"]
-radius = 155.003
+radius = 42.0119
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d8upa"]
 size = Vector2(21, 32)
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox_component")]
+[node name="Enemy" type="CharacterBody2D"]
 z_index = 5
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_i0bmw")
-hurtbox_component = NodePath("HurtboxComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -15.5)
@@ -345,8 +345,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionRadius"]
-visible = false
-position = Vector2(0, -32)
+position = Vector2(0, -16)
 shape = SubResource("CircleShape2D_bu35a")
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
@@ -384,6 +383,10 @@ destroy_effect_spawner_component = NodePath("../SpawnerComponent")
 [node name="SpawnerComponent" type="Node2D" parent="."]
 script = ExtResource("7_bnst4")
 scene = ExtResource("8_w3tky")
+
+[node name="BorderBounceComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("14_r5ys2")
+actor = NodePath("..")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="AttackDetectionZone" to="." method="_on_attack_detection_zone_body_entered"]

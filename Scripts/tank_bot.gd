@@ -61,9 +61,9 @@ func fire_bullet():
 
 
 func handle_hurt():
-	is_active = false
+	#is_active = false
 	if is_alive:
-		hurtbox_component.is_invincible = true
+		#hurtbox_component.is_invincible = true
 		animation_player.play("hurt")
 
 
@@ -90,5 +90,5 @@ func update_animations(input_axis):
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "hurt":
-		is_active = true
+		#is_active = true
 		hurtbox_component.is_invincible = false
