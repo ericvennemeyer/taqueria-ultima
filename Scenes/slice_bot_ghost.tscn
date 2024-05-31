@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1ogve4pckv7j"]
+
+[ext_resource type="Texture2D" uid="uid://ce04ec1ytya32" path="res://Assets/Sprites/Slice Bot/Attack.png" id="1_tml3e"]
+[ext_resource type="Script" path="res://Scripts/slice_bot_ghost.gd" id="2_q2rkf"]
+
+[node name="SliceBotGhost" type="Sprite2D"]
+modulate = Color(0.131991, 0.516188, 0.68357, 1)
+show_behind_parent = true
+texture = ExtResource("1_tml3e")
+hframes = 4
+script = ExtResource("2_q2rkf")

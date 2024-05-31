@@ -11,7 +11,7 @@ func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color.LIGHT_BLUE)
 	
 	player_characters_array = player_controlled.get_children()
-	for player: Player in player_characters_array:
+	for player in player_characters_array:
 		if player.is_active:
 			current_player = player
 			current_player.selection_indicator.visible = true
@@ -31,7 +31,7 @@ func change_player_character():
 		if next_player_index > player_characters_array.size() - 1:
 			next_player_index = 0
 	current_player = player_characters_array[next_player_index]
-	for player: Player in player_characters_array:
+	for player in player_characters_array:
 		player.is_active = false
 		player.selection_indicator.visible = false
 	current_player.is_active = true

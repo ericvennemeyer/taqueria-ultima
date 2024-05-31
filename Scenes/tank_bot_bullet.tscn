@@ -26,22 +26,20 @@ animations = [{
 }],
 "loop": false,
 "name": &"default",
-"speed": 10.0
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bvbmb"]
 size = Vector2(6, 5.33333)
 
 [node name="TankBotBullet" type="Node2D"]
-scale = Vector2(1.5, 1.5)
+scale = Vector2(2, 2)
 script = ExtResource("1_5wc6v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_1x47b")
 autoplay = "default"
-frame = 1
-frame_progress = 1.0
 
 [node name="HitboxComponent" type="Area2D" parent="."]
 collision_layer = 0
@@ -54,7 +52,7 @@ shape = SubResource("RectangleShape2D_bvbmb")
 
 [node name="ScaleComponent" type="Node" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("4_5n67o")
-sprite = NodePath("")
+sprite = NodePath("../AnimatedSprite2D")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(0, 2.98023e-08)

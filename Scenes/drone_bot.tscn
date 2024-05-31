@@ -1,15 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://ct8ksffth41ph"]
+[gd_scene load_steps=20 format=3 uid="uid://ct8ksffth41ph"]
 
 [ext_resource type="PackedScene" uid="uid://c76tontoxnues" path="res://Scenes/bot_base_scene.tscn" id="1_myfcn"]
+[ext_resource type="Script" path="res://Scripts/drone_bot.gd" id="2_5plu0"]
 [ext_resource type="Texture2D" uid="uid://dsvofqwyv10ew" path="res://Assets/Sprites/Drone Bot/Idle.png" id="2_60qe2"]
 [ext_resource type="Texture2D" uid="uid://cucfxok6sgbgt" path="res://Assets/Sprites/Drone Bot/Attack.png" id="2_lk60r"]
+[ext_resource type="Resource" uid="uid://cjce1q6ejajgq" path="res://Resources/default_dronebot_movement_data.tres" id="3_b860b"]
 [ext_resource type="Texture2D" uid="uid://s5h4u2pvl1xj" path="res://Assets/Sprites/Drone Bot/Walk.png" id="3_hxt01"]
 [ext_resource type="Texture2D" uid="uid://bxve8eo2aewgq" path="res://Assets/Sprites/Drone Bot/Death.png" id="5_xpx3j"]
 [ext_resource type="Texture2D" uid="uid://cusprpp0rxafq" path="res://Assets/Sprites/Drone Bot/Hurt.png" id="6_vjvd8"]
+[ext_resource type="Script" path="res://Components/hitbox_component.gd" id="10_iwaik"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wsdmc"]
 resource_local_to_scene = true
-size = Vector2(14, 10)
+size = Vector2(14, 21)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_13n5l"]
 resource_local_to_scene = true
@@ -248,10 +251,15 @@ _data = {
 "walk": SubResource("Animation_hhdd5")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_goudo"]
+radius = 27.0
+
 [node name="DroneBot" instance=ExtResource("1_myfcn")]
+script = ExtResource("2_5plu0")
+movement_data = ExtResource("3_b860b")
 
 [node name="CollisionShape2D" parent="." index="0"]
-position = Vector2(0, -5)
+position = Vector2(0, -10.5)
 shape = SubResource("RectangleShape2D_wsdmc")
 
 [node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
@@ -267,9 +275,10 @@ stats_component = NodePath("../StatsComponent")
 visible = false
 position = Vector2(0, -37)
 
-[node name="HurtComponent" parent="." index="5" node_paths=PackedStringArray("stats_component", "hurtbox_component")]
+[node name="HurtComponent" parent="." index="5" node_paths=PackedStringArray("stats_component", "hurtbox_component", "health_bar")]
 stats_component = NodePath("../StatsComponent")
 hurtbox_component = NodePath("../HurtboxComponent")
+health_bar = NodePath("../HealthBar")
 
 [node name="Sprite2D" parent="Sprites" index="0"]
 position = Vector2(9, -11)
@@ -281,3 +290,17 @@ libraries = {
 "": SubResource("AnimationLibrary_vpuxj")
 }
 autoplay = "idle"
+
+[node name="HitboxComponent" type="Area2D" parent="." index="8"]
+script = ExtResource("10_iwaik")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+position = Vector2(0, 10)
+shape = SubResource("CircleShape2D_goudo")
+
+[node name="AttackDurationTimer" type="Timer" parent="." index="9"]
+wait_time = 2.0
+one_shot = true
+
+[node name="BorderBounceComponent" parent="." index="10" node_paths=PackedStringArray("actor")]
+actor = NodePath("..")

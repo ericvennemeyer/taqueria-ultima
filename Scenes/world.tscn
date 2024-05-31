@@ -1,14 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://d2pob0ffnaeal"]
+[gd_scene load_steps=15 format=3 uid="uid://d2pob0ffnaeal"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_qihp8"]
 [ext_resource type="PackedScene" uid="uid://cpx1ygw3suhcn" path="res://Scenes/player.tscn" id="3_uj7fh"]
 [ext_resource type="PackedScene" uid="uid://dwgdoxctxjlc0" path="res://Scenes/ladder.tscn" id="3_wcnyj"]
 [ext_resource type="Texture2D" uid="uid://cet5ypxdip8ei" path="res://Assets/Tilesets/Dead Tileset V1.png" id="5_eayi0"]
 [ext_resource type="Texture2D" uid="uid://d1wmq1ryxywku" path="res://Assets/Tilesets/SCi-fi assets planet one.png" id="5_eha45"]
+[ext_resource type="PackedScene" uid="uid://ct8ksffth41ph" path="res://Scenes/drone_bot.tscn" id="5_mxkri"]
 [ext_resource type="Texture2D" uid="uid://bp6qgy6dr1edk" path="res://Assets/Tilesets/SCi-fi-Planet one Add ons v1.png" id="6_di7bd"]
+[ext_resource type="PackedScene" uid="uid://cj0dma3dx8ju" path="res://Scenes/tank_bot.tscn" id="7_7je4c"]
+[ext_resource type="PackedScene" uid="uid://cq5lqarmml37j" path="res://Scenes/slice_bot.tscn" id="8_kg5sa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3bssg"]
-size = Vector2(4, 197)
+size = Vector2(4, 191)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_okv2x"]
 texture = ExtResource("5_eayi0")
@@ -117,15 +120,10 @@ texture = ExtResource("5_eayi0")
 15:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.0625, -8, -6.125)
 15:6/0/physics_layer_0/polygon_0/one_way = true
 0:7/0 = 0
-0:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-1.78125, -3.0625, 2.71875, -2.9375, 5.71875, 0.1875, -4.65625, 0.25)
 1:7/0 = 0
-1:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2.84375, -3.0625, 0.03125, -3, 0.21875, -0.125, -5.40625, -0.0625)
 2:7/0 = 0
-2:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2.84375, -3.0625, 3.71875, -3.0625, 3.71875, -1.1875, -2.71875, -1.125)
 3:7/0 = 0
-3:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.03125, -2.8125, 3.71875, -3.0625, 3.71875, -1.1875, -0.71875, -1.1875)
 4:7/0 = 0
-4:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.84375, -2, 1.96875, -2, 2.09375, -1.1875, -0.71875, -1.1875)
 6:7/0 = 0
 7:7/0 = 0
 8:7/0 = 0
@@ -655,11 +653,14 @@ script = ExtResource("1_qihp8")
 position = Vector2(320, 240)
 is_active = true
 
-[node name="Player2" parent="Player-Controlled" instance=ExtResource("3_uj7fh")]
-position = Vector2(504, 208)
+[node name="TankBot" parent="Player-Controlled" instance=ExtResource("7_7je4c")]
+position = Vector2(216, 335)
 
-[node name="Player3" parent="Player-Controlled" instance=ExtResource("3_uj7fh")]
-position = Vector2(560, 336)
+[node name="SliceBot" parent="Player-Controlled" instance=ExtResource("8_kg5sa")]
+position = Vector2(56, 335)
+
+[node name="DroneBot" parent="Player-Controlled" instance=ExtResource("5_mxkri")]
+position = Vector2(212, 152)
 
 [node name="Enemies" type="Node" parent="."]
 
@@ -670,7 +671,7 @@ collision_mask = 2
 player = NodePath("../../Player-Controlled/Player")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ladders/Ladder"]
-position = Vector2(600, 236.5)
+position = Vector2(600, 239.5)
 shape = SubResource("RectangleShape2D_3bssg")
 
 [node name="TileMap" type="TileMap" parent="."]

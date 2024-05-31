@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c76tontoxnues"]
+[gd_scene load_steps=9 format=3 uid="uid://c76tontoxnues"]
 
 [ext_resource type="Script" path="res://Components/hurtbox_component.gd" id="3_mvron"]
 [ext_resource type="Script" path="res://Scripts/health_bar.gd" id="4_sfi3y"]
 [ext_resource type="Texture2D" uid="uid://c5imrr0yd6nfh" path="res://Assets/Icons/Crosshairs/crosshair022.png" id="5_7jqpp"]
+[ext_resource type="Script" path="res://Components/border_bounce_component.gd" id="6_13i84"]
 [ext_resource type="Script" path="res://Components/stats_component.gd" id="20_3re0j"]
 [ext_resource type="Script" path="res://Components/hurt_component.gd" id="21_5scgv"]
 
@@ -61,13 +62,17 @@ texture = ExtResource("5_7jqpp")
 script = ExtResource("20_3re0j")
 health = 10
 
-[node name="HurtComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "hurtbox_component")]
+[node name="HurtComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "hurtbox_component", "health_bar")]
 script = ExtResource("21_5scgv")
 stats_component = NodePath("../StatsComponent")
 hurtbox_component = NodePath("../HurtboxComponent")
+health_bar = NodePath("../HealthBar")
 
 [node name="Sprites" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprites"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="BorderBounceComponent" type="Node" parent="."]
+script = ExtResource("6_13i84")

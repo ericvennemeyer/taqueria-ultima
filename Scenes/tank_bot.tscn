@@ -1,9 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://cj0dma3dx8ju"]
+[gd_scene load_steps=20 format=3 uid="uid://cj0dma3dx8ju"]
 
 [ext_resource type="PackedScene" uid="uid://c76tontoxnues" path="res://Scenes/bot_base_scene.tscn" id="1_v443o"]
+[ext_resource type="Script" path="res://Scripts/tank_bot.gd" id="2_23eb1"]
 [ext_resource type="Texture2D" uid="uid://w63w4c1hu0v6" path="res://Assets/Sprites/Tank Bot/Idle.png" id="2_pwp2y"]
+[ext_resource type="Resource" uid="uid://ck7la52gdrxvy" path="res://Resources/default_tankbot_movement_data.tres" id="3_86up7"]
 [ext_resource type="Texture2D" uid="uid://cllveoyt4kf7h" path="res://Assets/Sprites/Tank Bot/Walk.png" id="3_vrg04"]
 [ext_resource type="Texture2D" uid="uid://c4r62bu0wo57a" path="res://Assets/Sprites/Tank Bot/Attack.png" id="4_lguns"]
+[ext_resource type="PackedScene" uid="uid://bg2cklco3wdjr" path="res://Scenes/tank_bot_bullet.tscn" id="5_21ila"]
 [ext_resource type="Texture2D" uid="uid://c1j68hubw7ugy" path="res://Assets/Sprites/Tank Bot/Death.png" id="5_e3cb0"]
 [ext_resource type="Texture2D" uid="uid://dy0te0gw1wt11" path="res://Assets/Sprites/Tank Bot/Hurt.png" id="6_su8vv"]
 [ext_resource type="Script" path="res://Components/spawner_component.gd" id="7_20541"]
@@ -71,18 +74,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprites/SpawnerComponent:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(17, -18)]
 }
 
 [sub_resource type="Animation" id="Animation_uyjdb"]
@@ -167,18 +158,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprites/SpawnerComponent:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(17, -18)]
 }
 
 [sub_resource type="Animation" id="Animation_mhmji"]
@@ -274,6 +253,8 @@ _data = {
 }
 
 [node name="TankBot" instance=ExtResource("1_v443o")]
+script = ExtResource("2_23eb1")
+movement_data = ExtResource("3_86up7")
 metadata/_edit_vertical_guides_ = [-10.0, 9.0]
 
 [node name="CollisionShape2D" parent="." index="0"]
@@ -292,9 +273,10 @@ stats_component = NodePath("../StatsComponent")
 [node name="SelectionIndicatorSprite" parent="." index="3"]
 visible = false
 
-[node name="HurtComponent" parent="." index="5" node_paths=PackedStringArray("stats_component", "hurtbox_component")]
+[node name="HurtComponent" parent="." index="5" node_paths=PackedStringArray("stats_component", "hurtbox_component", "health_bar")]
 stats_component = NodePath("../StatsComponent")
 hurtbox_component = NodePath("../HurtboxComponent")
+health_bar = NodePath("../HealthBar")
 
 [node name="Sprite2D" parent="Sprites" index="0"]
 position = Vector2(8, -24)
@@ -302,11 +284,15 @@ texture = ExtResource("4_lguns")
 hframes = 4
 
 [node name="SpawnerComponent" type="Node2D" parent="Sprites" index="1"]
-position = Vector2(17, -18)
+position = Vector2(18, -18)
 script = ExtResource("7_20541")
+scene = ExtResource("5_21ila")
 
 [node name="AnimationPlayer" parent="." index="7"]
 libraries = {
 "": SubResource("AnimationLibrary_xj1tl")
 }
 autoplay = "idle"
+
+[node name="BorderBounceComponent" parent="." index="8" node_paths=PackedStringArray("actor")]
+actor = NodePath("..")

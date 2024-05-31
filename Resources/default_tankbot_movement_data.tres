@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PlayerMovementData" load_steps=2 format=3 uid="uid://ck7la52gdrxvy"]
+
+[ext_resource type="Script" path="res://Resources/player_movement_data.gd" id="1_letpp"]
+
+[resource]
+script = ExtResource("1_letpp")
+speed = 50.0
+acceleration = 600.0
+air_acceleration = 2.08165e-12
+friction = 800.0
+jump_velocity = 2.08165e-12
+gravity_scale = 1.0
+air_resistance = 2.08165e-12
+climb_velocity = 2.08165e-12
+fire_rate = 0.6
+knockback_amount = 2

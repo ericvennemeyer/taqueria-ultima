@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PlayerMovementData" load_steps=2 format=3 uid="uid://bmwhc7oqs6k0"]
+
+[ext_resource type="Script" path="res://Resources/player_movement_data.gd" id="1_jgg48"]
+
+[resource]
+script = ExtResource("1_jgg48")
+speed = 160.0
+acceleration = 900.0
+air_acceleration = 2.08165e-12
+friction = 950.0
+jump_velocity = 2.08165e-12
+gravity_scale = 1.0
+air_resistance = 2.08165e-12
+climb_velocity = 2.08165e-12
+fire_rate = 0.3
+knockback_amount = 0

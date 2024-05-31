@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cpx1ygw3suhcn"]
+[gd_scene load_steps=37 format=3 uid="uid://cpx1ygw3suhcn"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_c0gef"]
 [ext_resource type="Resource" uid="uid://daje6twscisj6" path="res://Resources/default_player_movement_data.tres" id="2_vxcgb"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://ct4lyjdu18muv" path="res://Assets/Sprites/biker attack body sprites/Jump1.png" id="17_qwfnd"]
 [ext_resource type="Script" path="res://Components/spawner_component.gd" id="20_2podf"]
 [ext_resource type="PackedScene" uid="uid://bgth4on0fwjle" path="res://Scenes/hero_bullet.tscn" id="21_2tudg"]
+[ext_resource type="Script" path="res://Components/border_bounce_component.gd" id="22_8x8n8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5n2xv"]
 size = Vector2(16, 32)
@@ -881,6 +882,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 10
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_c0gef")
@@ -958,7 +960,12 @@ one_shot = true
 script = ExtResource("7_3l0gb")
 health = 10
 
-[node name="HurtComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "hurtbox_component")]
+[node name="HurtComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "hurtbox_component", "health_bar")]
 script = ExtResource("8_2pxht")
 stats_component = NodePath("../StatsComponent")
 hurtbox_component = NodePath("../HurtboxComponent")
+health_bar = NodePath("../HealthBar")
+
+[node name="BorderBounceComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("22_8x8n8")
+actor = NodePath("..")

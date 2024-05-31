@@ -1,11 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://cq5lqarmml37j"]
+[gd_scene load_steps=21 format=3 uid="uid://cq5lqarmml37j"]
 
 [ext_resource type="PackedScene" uid="uid://c76tontoxnues" path="res://Scenes/bot_base_scene.tscn" id="1_w366l"]
+[ext_resource type="Script" path="res://Scripts/slice_bot.gd" id="2_djnog"]
 [ext_resource type="Texture2D" uid="uid://derkqy65b5a8" path="res://Assets/Sprites/Slice Bot/Idle.png" id="2_vu8nx"]
+[ext_resource type="Resource" uid="uid://bmwhc7oqs6k0" path="res://Resources/default_slicebot_movement_data.tres" id="3_6rg6a"]
 [ext_resource type="Texture2D" uid="uid://dvohv2fl61quh" path="res://Assets/Sprites/Slice Bot/Walk.png" id="3_60mrp"]
 [ext_resource type="Texture2D" uid="uid://ce04ec1ytya32" path="res://Assets/Sprites/Slice Bot/Attack.png" id="4_hpheq"]
+[ext_resource type="PackedScene" uid="uid://c1ogve4pckv7j" path="res://Scenes/slice_bot_ghost.tscn" id="4_mgysq"]
 [ext_resource type="Texture2D" uid="uid://bgwhg4isnjxpb" path="res://Assets/Sprites/Slice Bot/Hurt.png" id="5_ug3sw"]
 [ext_resource type="Texture2D" uid="uid://ca3c821ltc0c0" path="res://Assets/Sprites/Slice Bot/Death.png" id="6_gm444"]
+[ext_resource type="Script" path="res://Components/hitbox_component.gd" id="9_otryi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hla7u"]
 resource_local_to_scene = true
@@ -248,7 +252,14 @@ _data = {
 "walk": SubResource("Animation_nhn6w")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_thrjo"]
+size = Vector2(36, 7)
+
 [node name="SliceBot" instance=ExtResource("1_w366l")]
+script = ExtResource("2_djnog")
+movement_data = ExtResource("3_6rg6a")
+dash_ghost_image = ExtResource("4_mgysq")
+dash_scale = 3.5
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2(-1.00008, -4)
@@ -267,13 +278,14 @@ stats_component = NodePath("../StatsComponent")
 visible = false
 position = Vector2(0, -36)
 
-[node name="HurtComponent" parent="." index="5" node_paths=PackedStringArray("stats_component", "hurtbox_component")]
+[node name="HurtComponent" parent="." index="5" node_paths=PackedStringArray("stats_component", "hurtbox_component", "health_bar")]
 stats_component = NodePath("../StatsComponent")
 hurtbox_component = NodePath("../HurtboxComponent")
+health_bar = NodePath("../HealthBar")
 
 [node name="Sprite2D" parent="Sprites" index="0"]
 position = Vector2(8, -24)
-texture = ExtResource("6_gm444")
+texture = ExtResource("3_60mrp")
 hframes = 4
 
 [node name="AnimationPlayer" parent="." index="7"]
@@ -281,3 +293,16 @@ libraries = {
 "": SubResource("AnimationLibrary_k4nld")
 }
 autoplay = "idle"
+
+[node name="HitboxComponent" type="Area2D" parent="." index="8"]
+script = ExtResource("9_otryi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+position = Vector2(0, -13.5)
+shape = SubResource("RectangleShape2D_thrjo")
+
+[node name="GhostTimer" type="Timer" parent="." index="9"]
+wait_time = 0.1
+
+[node name="BorderBounceComponent" parent="." index="10" node_paths=PackedStringArray("actor")]
+actor = NodePath("..")
