@@ -47,10 +47,12 @@ animations = [{
 }]
 
 [node name="ExplosionEffect" type="Node2D"]
+z_index = 10
 script = ExtResource("1_mb0p8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_fsv60")
 autoplay = "default"
-frame = 4
-frame_progress = 1.0
+frame = 2
+frame_progress = 0.923189

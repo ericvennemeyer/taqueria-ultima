@@ -20,6 +20,7 @@ var is_alive = true
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var ghost_timer: Timer = $GhostTimer
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var explosion_spawner: SpawnerComponent = $ExplosionSpawner
 
 
 func _ready() -> void:
@@ -99,3 +100,6 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "hurt":
 		#is_active = true
 		hurtbox_component.is_invincible = false
+	elif anim_name == "death":
+		explosion_spawner.spawn()
+		#queue_free()

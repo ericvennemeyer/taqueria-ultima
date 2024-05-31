@@ -285,7 +285,7 @@ health_bar = NodePath("../HealthBar")
 
 [node name="Sprite2D" parent="Sprites" index="0"]
 position = Vector2(9, -11)
-texture = ExtResource("2_lk60r")
+texture = ExtResource("5_xpx3j")
 hframes = 4
 
 [node name="AnimationPlayer" parent="." index="7"]
@@ -313,5 +313,8 @@ actor = NodePath("..")
 [node name="DestroyedComponent" parent="." index="11" node_paths=PackedStringArray("actor", "stats_component")]
 actor = NodePath("..")
 stats_component = NodePath("../StatsComponent")
+
+[node name="ExplosionSpawner" parent="." index="12"]
+position = Vector2(0, 5)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

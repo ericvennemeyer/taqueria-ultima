@@ -1,7 +1,7 @@
 class_name Enemy
 extends CharacterBody2D
 
-const SPEED = 100.0
+const SPEED = 80.0
 const JUMP_VELOCITY = -300.0
 
 @export var run_direction = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c76tontoxnues"]
+[gd_scene load_steps=14 format=3 uid="uid://c76tontoxnues"]
 
 [ext_resource type="Texture2D" uid="uid://b6d31sqhbdr2r" path="res://Assets/Icons/Health Bars/UI_Flat_Filler_04.png" id="3_2b6fy"]
 [ext_resource type="Script" path="res://Components/hurtbox_component.gd" id="3_mvron"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://c5imrr0yd6nfh" path="res://Assets/Icons/Crosshairs/crosshair022.png" id="5_7jqpp"]
 [ext_resource type="Script" path="res://Components/border_bounce_component.gd" id="6_13i84"]
 [ext_resource type="Script" path="res://Components/destroyed_component.gd" id="9_1cawn"]
+[ext_resource type="Script" path="res://Components/spawner_component.gd" id="10_v58f3"]
+[ext_resource type="PackedScene" uid="uid://bnct4qkyw47hw" path="res://Scenes/explosion_effect.tscn" id="11_j7m50"]
 [ext_resource type="Script" path="res://Components/stats_component.gd" id="20_3re0j"]
 [ext_resource type="Script" path="res://Components/hurt_component.gd" id="21_5scgv"]
 
@@ -89,3 +91,7 @@ script = ExtResource("6_13i84")
 script = ExtResource("9_1cawn")
 actor = NodePath("..")
 stats_component = NodePath("../StatsComponent")
+
+[node name="ExplosionSpawner" type="Node2D" parent="."]
+script = ExtResource("10_v58f3")
+scene = ExtResource("11_j7m50")
