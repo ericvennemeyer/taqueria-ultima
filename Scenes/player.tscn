@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://cpx1ygw3suhcn"]
+[gd_scene load_steps=39 format=3 uid="uid://cpx1ygw3suhcn"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_c0gef"]
 [ext_resource type="Resource" uid="uid://daje6twscisj6" path="res://Resources/default_player_movement_data.tres" id="2_vxcgb"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://c5imrr0yd6nfh" path="res://Assets/Icons/Crosshairs/crosshair022.png" id="4_uucvv"]
 [ext_resource type="Texture2D" uid="uid://cam47bdmcs52v" path="res://Assets/Sprites/1 Biker/Biker_run.png" id="5_dasb8"]
 [ext_resource type="Texture2D" uid="uid://ckhoyssf0y8fx" path="res://Assets/Sprites/1 Biker/Biker_jump.png" id="5_eatjc"]
+[ext_resource type="Texture2D" uid="uid://b6d31sqhbdr2r" path="res://Assets/Icons/Health Bars/UI_Flat_Filler_04.png" id="5_m1qhh"]
+[ext_resource type="Texture2D" uid="uid://c35mpl2b8p332" path="res://Assets/Icons/Health Bars/UI_Flat_Filler_03.png" id="5_mjv6e"]
 [ext_resource type="Texture2D" uid="uid://cqltqmdaybut" path="res://Assets/Sprites/biker attack hand sprites/3.png" id="6_6gery"]
 [ext_resource type="Texture2D" uid="uid://hutbxug8v677" path="res://Assets/Sprites/guns/8_1.png" id="6_dyv6j"]
 [ext_resource type="Texture2D" uid="uid://02uxjotiyypc" path="res://Assets/Sprites/1 Biker/Biker_climb.png" id="6_yh6gv"]
@@ -34,43 +36,43 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprites/MainSprite:frame")
+tracks/0/path = NodePath("Sprites/HandSprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"update": 0,
+"values": [Vector2(6, -22)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprites/HandSprite:position")
+tracks/1/path = NodePath("Sprites/WeaponSprite:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(6, -22)]
+"values": [Vector2(20, -25)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprites/WeaponSprite:position")
+tracks/2/path = NodePath("Sprites/WeaponSprite:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(20, -25)]
+"update": 1,
+"values": [true]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Sprites/WeaponSprite:visible")
+tracks/3/path = NodePath("Sprites/HandSprite:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -82,22 +84,10 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Sprites/HandSprite:visible")
+tracks/4/path = NodePath("Sprites/SpawnerComponent:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Sprites/SpawnerComponent:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -902,6 +892,7 @@ position = Vector2(0, -15.5)
 shape = SubResource("RectangleShape2D_qxdjp")
 
 [node name="HealthBar" type="ProgressBar" parent="." node_paths=PackedStringArray("stats_component")]
+visible = false
 modulate = Color(1, 0, 0, 1)
 anchors_preset = 15
 anchor_right = 1.0
@@ -919,6 +910,28 @@ value = 5.0
 show_percentage = false
 script = ExtResource("10_dl2uj")
 stats_component = NodePath("../StatsComponent")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+z_index = 15
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -53.0
+offset_right = 24.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 1)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+max_value = 10.0
+value = 5.0
+texture_under = ExtResource("5_m1qhh")
+texture_progress = ExtResource("5_mjv6e")
+texture_progress_offset = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="SelectionIndicatorSprite" type="Sprite2D" parent="."]
 visible = false
@@ -939,7 +952,7 @@ texture = ExtResource("6_6gery")
 
 [node name="MainSprite" type="Sprite2D" parent="Sprites"]
 position = Vector2(10, -24)
-texture = ExtResource("17_qwfnd")
+texture = ExtResource("3_shtly")
 hframes = 4
 
 [node name="SpawnerComponent" type="Node2D" parent="Sprites"]
