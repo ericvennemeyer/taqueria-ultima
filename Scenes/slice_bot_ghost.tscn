@@ -9,3 +9,4 @@ show_behind_parent = true
 texture = ExtResource("1_tml3e")
 hframes = 4
 script = ExtResource("2_q2rkf")
+sprite_fade_duration = 0.3

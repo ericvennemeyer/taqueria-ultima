@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var dash_ghost_image: PackedScene
 @export var is_active = false
 @export var dash_scale: float = 4.0
+@export var dash_duration: float = 0.8
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -20,7 +21,6 @@ var fire_rate_countdown = 0.0
 
 func _ready() -> void:
 	ghost_timer.timeout.connect(add_ghost_image)
-	print(sprite_2d.position)
 
 
 func _physics_process(delta):
@@ -45,8 +45,11 @@ func apply_gravity(delta):
 func handle_attack(delta):
 	if Input.is_action_just_pressed("attack"):
 		is_attacking = true
-		
-		velocity.x = movement_data.speed * dash_scale * sprites.scale.x
+		ghost_timer.start()
+		var dash_tween = get_tree().create_tween()
+		dash_tween.tween_property(self, "position", Vector2(position.x + movement_data.speed * dash_scale * sprites.scale.x, position.y), dash_duration)
+		await dash_tween.finished
+		ghost_timer.stop()
 	else:
 		is_attacking = false
 
