@@ -1,11 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://d2pob0ffnaeal"]
+[gd_scene load_steps=16 format=3 uid="uid://d2pob0ffnaeal"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_qihp8"]
+[ext_resource type="Script" path="res://Components/shake_component.gd" id="2_drkny"]
 [ext_resource type="PackedScene" uid="uid://cpx1ygw3suhcn" path="res://Scenes/player.tscn" id="3_uj7fh"]
 [ext_resource type="PackedScene" uid="uid://dwgdoxctxjlc0" path="res://Scenes/ladder.tscn" id="3_wcnyj"]
 [ext_resource type="Texture2D" uid="uid://cet5ypxdip8ei" path="res://Assets/Tilesets/Dead Tileset V1.png" id="5_eayi0"]
 [ext_resource type="Texture2D" uid="uid://d1wmq1ryxywku" path="res://Assets/Tilesets/SCi-fi assets planet one.png" id="5_eha45"]
-[ext_resource type="PackedScene" uid="uid://cyfp0mwm87gmv" path="res://enemy_wave_spawner.tscn" id="5_q0o1e"]
+[ext_resource type="PackedScene" uid="uid://cyfp0mwm87gmv" path="res://Scenes/enemy_wave_spawner.tscn" id="5_q0o1e"]
 [ext_resource type="Texture2D" uid="uid://bp6qgy6dr1edk" path="res://Assets/Tilesets/SCi-fi-Planet one Add ons v1.png" id="6_di7bd"]
 [ext_resource type="PackedScene" uid="uid://cj0dma3dx8ju" path="res://Scenes/tank_bot.tscn" id="7_7je4c"]
 [ext_resource type="PackedScene" uid="uid://cq5lqarmml37j" path="res://Scenes/slice_bot.tscn" id="8_kg5sa"]
@@ -645,7 +646,9 @@ sources/2 = SubResource("TileSetAtlasSource_ptp2v")
 [node name="World" type="Node2D"]
 script = ExtResource("1_qihp8")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="CameraContainer" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="CameraContainer"]
 zoom = Vector2(1.5, 1.5)
 limit_left = 0
 limit_top = 0
@@ -658,8 +661,20 @@ position_smoothing_enabled = true
 [node name="Player" parent="Player-Controlled" instance=ExtResource("3_uj7fh")]
 position = Vector2(320, 240)
 
+[node name="ShakeComponent" type="Node" parent="Player-Controlled/Player" node_paths=PackedStringArray("node")]
+script = ExtResource("2_drkny")
+node = NodePath("../../../CameraContainer")
+shake_amount = 20.0
+shake_duration = 0.5
+
 [node name="TankBot" parent="Player-Controlled" instance=ExtResource("7_7je4c")]
 position = Vector2(368, 335)
+
+[node name="ShakeComponent" type="Node" parent="Player-Controlled/TankBot" node_paths=PackedStringArray("node")]
+script = ExtResource("2_drkny")
+node = NodePath("../../../CameraContainer")
+shake_amount = 20.0
+shake_duration = 0.5
 
 [node name="SliceBot" parent="Player-Controlled" instance=ExtResource("8_kg5sa")]
 position = Vector2(545, 335)

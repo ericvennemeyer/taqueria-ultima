@@ -22,6 +22,7 @@ var is_alive = true
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var spawner_component: SpawnerComponent = $Sprites/SpawnerComponent
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var shake_component: ShakeComponent = $ShakeComponent
 
 
 func _ready() -> void:
@@ -98,6 +99,7 @@ func handle_attack():
 func fire_bullet():
 	var bullet = spawner_component.spawn()
 	bullet.move_component.velocity.x = bullet.move_component.velocity.x * sprites.scale.x
+	shake_component.tween_shake()
 
 
 func handle_hurt():

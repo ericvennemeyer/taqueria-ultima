@@ -4,7 +4,7 @@ var player_characters_array: Array[Node]
 var current_player
 var score: int = 0
 
-@onready var camera_2d: Camera2D = $Camera2D
+@onready var camera_2d: Camera2D = $CameraContainer/Camera2D
 @onready var player_controlled: Node = $"Player-Controlled"
 @onready var enemies: Node = $Enemies
 
@@ -17,7 +17,7 @@ func _ready() -> void:
 		if player.is_active:
 			current_player = player
 			current_player.selection_indicator.visible = true
-			camera_2d.global_position = current_player.global_position
+			camera_2d.position = current_player.global_position
 	
 	var enemy_spawner_array = enemies.get_children()
 	for spawner in enemy_spawner_array:
@@ -26,7 +26,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	camera_2d.global_position = current_player.global_position
+	camera_2d.position = current_player.global_position
 	
 	if Input.is_action_just_pressed("change_player"):
 		change_player_character()
