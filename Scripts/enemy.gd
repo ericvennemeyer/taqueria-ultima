@@ -18,6 +18,7 @@ var is_alive = true
 @onready var sprites: Node2D = $Sprites
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var border_bounce_component: BorderBounceComponent = $BorderBounceComponent
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
 
 func _ready() -> void:
@@ -60,7 +61,7 @@ func _physics_process(delta: float) -> void:
 func handle_hurt():
 	is_active = false
 	if is_alive:
-		hurtbox_component.is_invincible = true
+		#hurtbox_component.is_invincible = true
 		animation_player.play("hurt")
 
 
@@ -75,10 +76,11 @@ func _on_player_detection_radius_body_exited(body: Node2D) -> void:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "hurt":
 		is_active = true
-		hurtbox_component.is_invincible = false
+		#hurtbox_component.is_invincible = false
 	elif anim_name == "death":
 		set_collision_layer_value(3, false)
 		hurtbox_component.set_collision_layer_value(3, false)
+		hurtbox_component.set_collision_mask_value(2, false)
 		enemy_death.emit()
 
 

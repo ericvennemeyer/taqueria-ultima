@@ -13,11 +13,11 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hla7u"]
 resource_local_to_scene = true
-size = Vector2(14, 8)
+size = Vector2(21, 29)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3fxss"]
 resource_local_to_scene = true
-size = Vector2(9, 15.5)
+size = Vector2(19, 24)
 
 [sub_resource type="Animation" id="Animation_vr23a"]
 length = 0.001
@@ -264,14 +264,14 @@ dash_scale = 1.0
 dash_duration = 0.2
 
 [node name="CollisionShape2D" parent="." index="0"]
-position = Vector2(-1.00008, -4)
+position = Vector2(-0.5, -14.5)
 shape = SubResource("RectangleShape2D_hla7u")
 
 [node name="HurtboxComponent" parent="." index="1"]
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
-position = Vector2(-0.5, -9.25)
+position = Vector2(-0.5, -12)
 shape = SubResource("RectangleShape2D_3fxss")
 
 [node name="SelectionIndicatorSprite" parent="." index="2"]
@@ -303,22 +303,28 @@ autoplay = "idle"
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("9_otryi")
+damage = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
 position = Vector2(0, -13.5)
 shape = SubResource("RectangleShape2D_thrjo")
+disabled = true
 
-[node name="GhostTimer" type="Timer" parent="." index="9"]
+[node name="AttackCooldownTimer" type="Timer" parent="." index="9"]
+one_shot = true
+
+[node name="GhostTimer" type="Timer" parent="." index="10"]
 wait_time = 0.03
 
-[node name="BorderBounceComponent" parent="." index="10" node_paths=PackedStringArray("actor")]
+[node name="BorderBounceComponent" parent="." index="11" node_paths=PackedStringArray("actor")]
 actor = NodePath("..")
 
-[node name="DestroyedComponent" parent="." index="11" node_paths=PackedStringArray("actor", "stats_component")]
+[node name="DestroyedComponent" parent="." index="12" node_paths=PackedStringArray("actor", "stats_component")]
 actor = NodePath("..")
 stats_component = NodePath("../StatsComponent")
 
-[node name="ExplosionSpawner" parent="." index="12"]
+[node name="ExplosionSpawner" parent="." index="13"]
 position = Vector2(0, -8)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_attack_cooldown_timer_timeout"]

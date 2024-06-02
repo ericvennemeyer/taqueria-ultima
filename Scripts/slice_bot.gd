@@ -20,7 +20,10 @@ var is_alive = true
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var ghost_timer: Timer = $GhostTimer
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var hurtbox_collision_shape: CollisionShape2D = $HurtboxComponent/CollisionShape2D
 @onready var explosion_spawner: SpawnerComponent = $ExplosionSpawner
+@onready var hitbox_collision_shape: CollisionShape2D = $HitboxComponent/CollisionShape2D
+@onready var attack_cooldown_timer: Timer = $AttackCooldownTimer
 
 
 func _ready() -> void:
@@ -54,10 +57,18 @@ func handle_attack(delta):
 	if Input.is_action_just_pressed("attack"):
 		is_attacking = true
 		ghost_timer.start()
+		hitbox_collision_shape.disabled = false
+		hurtbox_collision_shape.disabled = true
 		var dash_tween = get_tree().create_tween()
 		dash_tween.tween_property(self, "position", Vector2(position.x + movement_data.speed * dash_scale * sprites.scale.x, position.y), dash_duration)
 		await dash_tween.finished
 		ghost_timer.stop()
+		hitbox_collision_shape.disabled = true
+		hurtbox_collision_shape.disabled = false
+		
+		is_active = false
+		attack_cooldown_timer.start()
+		
 	else:
 		is_attacking = false
 
@@ -71,7 +82,7 @@ func add_ghost_image():
 func handle_hurt():
 	#is_active = false
 	if is_alive:
-		hurtbox_component.is_invincible = true
+		#hurtbox_component.is_invincible = true
 		animation_player.play("hurt")
 
 
@@ -103,3 +114,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	elif anim_name == "death":
 		explosion_spawner.spawn()
 		set_collision_layer_value(2, false)
+
+
+func _on_attack_cooldown_timer_timeout() -> void:
+	is_active = true
