@@ -102,4 +102,4 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		hurtbox_component.is_invincible = false
 	elif anim_name == "death":
 		explosion_spawner.spawn()
-		#queue_free()
+		set_collision_layer_value(2, false)

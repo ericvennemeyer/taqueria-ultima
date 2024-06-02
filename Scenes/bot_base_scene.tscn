@@ -44,7 +44,7 @@ position = Vector2(0, -45)
 rotation = 3.14159
 texture = ExtResource("5_7jqpp")
 
-[node name="HealthBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("stats_component")]
+[node name="HealthBar" type="TextureProgressBar" parent="."]
 z_index = 15
 anchors_preset = 8
 anchor_left = 0.5
@@ -66,7 +66,6 @@ texture_under = ExtResource("3_2b6fy")
 texture_progress = ExtResource("4_ivo5l")
 texture_progress_offset = Vector2(2.08165e-12, 2.08165e-12)
 script = ExtResource("4_sfi3y")
-stats_component = NodePath("")
 
 [node name="StatsComponent" type="Node" parent="."]
 script = ExtResource("20_3re0j")

@@ -29,8 +29,11 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
-	if is_alive and is_active:
+	
+	if not is_alive:
+		return
+	
+	if is_active:
 		# Handle jump.
 		if (ray_cast_right.is_colliding() or ray_cast_left.is_colliding()) and is_on_floor():
 			velocity.y = JUMP_VELOCITY
