@@ -256,6 +256,7 @@ _data = {
 size = Vector2(36, 7)
 
 [node name="SliceBot" instance=ExtResource("1_w366l")]
+z_index = 5
 script = ExtResource("2_djnog")
 movement_data = ExtResource("3_6rg6a")
 dash_ghost_image = ExtResource("4_mgysq")

@@ -1,6 +1,8 @@
 class_name Enemy
 extends CharacterBody2D
 
+signal enemy_death
+
 const SPEED = 80.0
 const JUMP_VELOCITY = -300.0
 
@@ -76,6 +78,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		hurtbox_component.is_invincible = false
 	elif anim_name == "death":
 		set_collision_layer_value(3, false)
+		hurtbox_component.set_collision_layer_value(3, false)
+		enemy_death.emit()
 
 
 func _on_attack_detection_zone_body_entered(body: Node2D) -> void:

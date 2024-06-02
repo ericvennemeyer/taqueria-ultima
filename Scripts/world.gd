@@ -2,9 +2,11 @@ extends Node2D
 
 var player_characters_array: Array[Node]
 var current_player
+var score: int = 0
 
-
+@onready var camera_2d: Camera2D = $Camera2D
 @onready var player_controlled: Node = $"Player-Controlled"
+@onready var enemies: Node = $Enemies
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,10 +17,16 @@ func _ready() -> void:
 		if player.is_active:
 			current_player = player
 			current_player.selection_indicator.visible = true
+	
+	var enemy_spawner_array = enemies.get_children()
+	for spawner in enemy_spawner_array:
+		spawner.enemy_death.connect(increase_score)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	camera_2d.global_position = current_player.global_position
+	
 	if Input.is_action_just_pressed("change_player"):
 		change_player_character()
 
@@ -36,3 +44,8 @@ func change_player_character():
 		player.selection_indicator.visible = false
 	current_player.is_active = true
 	current_player.selection_indicator.visible = true
+
+
+func increase_score():
+	score += 1
+	print(score)

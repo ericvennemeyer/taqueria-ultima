@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://dwgdoxctxjlc0" path="res://Scenes/ladder.tscn" id="3_wcnyj"]
 [ext_resource type="Texture2D" uid="uid://cet5ypxdip8ei" path="res://Assets/Tilesets/Dead Tileset V1.png" id="5_eayi0"]
 [ext_resource type="Texture2D" uid="uid://d1wmq1ryxywku" path="res://Assets/Tilesets/SCi-fi assets planet one.png" id="5_eha45"]
+[ext_resource type="PackedScene" uid="uid://cyfp0mwm87gmv" path="res://enemy_wave_spawner.tscn" id="5_q0o1e"]
 [ext_resource type="Texture2D" uid="uid://bp6qgy6dr1edk" path="res://Assets/Tilesets/SCi-fi-Planet one Add ons v1.png" id="6_di7bd"]
-[ext_resource type="PackedScene" uid="uid://b0lbpufbkorrc" path="res://Scenes/enemy.tscn" id="6_k62o8"]
 [ext_resource type="PackedScene" uid="uid://cj0dma3dx8ju" path="res://Scenes/tank_bot.tscn" id="7_7je4c"]
 [ext_resource type="PackedScene" uid="uid://cq5lqarmml37j" path="res://Scenes/slice_bot.tscn" id="8_kg5sa"]
 
@@ -645,6 +645,14 @@ sources/2 = SubResource("TileSetAtlasSource_ptp2v")
 [node name="World" type="Node2D"]
 script = ExtResource("1_qihp8")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+limit_left = 0
+limit_top = 0
+limit_right = 640
+limit_bottom = 360
+position_smoothing_enabled = true
+
 [node name="Player-Controlled" type="Node" parent="."]
 
 [node name="Player" parent="Player-Controlled" instance=ExtResource("3_uj7fh")]
@@ -658,8 +666,12 @@ position = Vector2(545, 335)
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="Enemy" parent="Enemies" instance=ExtResource("6_k62o8")]
-position = Vector2(50, 335)
+[node name="EnemyWaveSpawner" parent="Enemies" instance=ExtResource("5_q0o1e")]
+position = Vector2(0, 335)
+
+[node name="EnemyWaveSpawner2" parent="Enemies" instance=ExtResource("5_q0o1e")]
+position = Vector2(640, 335)
+enemy_run_direction = -1
 
 [node name="Ladders" type="Node" parent="."]
 

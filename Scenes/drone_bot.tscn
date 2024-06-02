@@ -255,6 +255,7 @@ _data = {
 radius = 27.0
 
 [node name="DroneBot" instance=ExtResource("1_myfcn")]
+z_index = 5
 script = ExtResource("2_5plu0")
 movement_data = ExtResource("3_b860b")
 
