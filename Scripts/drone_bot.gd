@@ -1,8 +1,12 @@
 class_name DroneBot
 extends CharacterBody2D
 
+signal player_died(character)
+
 @export var movement_data: PlayerMovementData
 @export var is_active = false
+
+var character_type = "drone_bot"
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -94,3 +98,4 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	elif anim_name == "death":
 		explosion_spawner.spawn()
 		set_collision_layer_value(2, false)
+		player_died.emit(character_type)

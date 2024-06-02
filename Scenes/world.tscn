@@ -664,17 +664,11 @@ position = Vector2(320, 240)
 [node name="ShakeComponent" type="Node" parent="Player-Controlled/Player" node_paths=PackedStringArray("node")]
 script = ExtResource("2_drkny")
 node = NodePath("../../../CameraContainer")
-shake_amount = 20.0
-shake_duration = 0.5
+shake_amount = 10.0
+shake_duration = 0.2
 
 [node name="TankBot" parent="Player-Controlled" instance=ExtResource("7_7je4c")]
 position = Vector2(368, 335)
-
-[node name="ShakeComponent" type="Node" parent="Player-Controlled/TankBot" node_paths=PackedStringArray("node")]
-script = ExtResource("2_drkny")
-node = NodePath("../../../CameraContainer")
-shake_amount = 20.0
-shake_duration = 0.5
 
 [node name="SliceBot" parent="Player-Controlled" instance=ExtResource("8_kg5sa")]
 position = Vector2(545, 335)

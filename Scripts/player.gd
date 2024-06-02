@@ -1,8 +1,12 @@
 class_name Player
 extends CharacterBody2D
 
+signal player_died(character)
+
 @export var movement_data: PlayerMovementData
 @export var is_active = true
+
+var character_type = "hero"
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -160,3 +164,5 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "hurt":
 		#is_active = true
 		hurtbox_component.is_invincible = false
+	elif anim_name == "death":
+		player_died.emit(character_type)

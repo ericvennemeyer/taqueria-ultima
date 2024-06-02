@@ -1,8 +1,12 @@
 class_name TankBot
 extends CharacterBody2D
 
+signal player_died(character)
+
 @export var movement_data: PlayerMovementData
 @export var is_active = false
+
+var character_type = "tank_bot"
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -17,7 +21,7 @@ var is_alive = true
 @onready var spawner_component: SpawnerComponent = $Sprites/SpawnerComponent
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var explosion_spawner: SpawnerComponent = $ExplosionSpawner
-@onready var shake_component: ShakeComponent = $ShakeComponent
+#@onready var shake_component: ShakeComponent = $ShakeComponent
 
 
 func _ready() -> void:
@@ -60,7 +64,7 @@ func handle_attack():
 func fire_bullet():
 	var bullet = spawner_component.spawn()
 	bullet.move_component.velocity.x = bullet.move_component.velocity.x * sprites.scale.x
-	shake_component.tween_shake()
+	#shake_component.tween_shake()
 
 
 func handle_hurt():
@@ -98,3 +102,4 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	elif anim_name == "death":
 		explosion_spawner.spawn()
 		set_collision_layer_value(2, false)
+		player_died.emit(character_type)

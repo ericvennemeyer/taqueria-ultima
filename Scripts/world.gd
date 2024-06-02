@@ -14,6 +14,7 @@ func _ready() -> void:
 	
 	player_characters_array = player_controlled.get_children()
 	for player in player_characters_array:
+		player.player_died.connect(_on_player_died.bind())
 		if player.is_active:
 			current_player = player
 			current_player.selection_indicator.visible = true
@@ -50,3 +51,16 @@ func change_player_character():
 func increase_score():
 	score += 1
 	print(score)
+
+
+func _on_player_died(character: String):
+	if character == "hero":
+		print("Game Over")
+	else:
+		#var index
+		#for player in player_characters_array:
+			#if player.character_type == character:
+				#player.selection_indicator.visible = false
+				#index = player_characters_array.find(player)
+		#player_characters_array.remove_at(index)
+		pass
