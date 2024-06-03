@@ -1,7 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://d2pob0ffnaeal"]
+[gd_scene load_steps=20 format=3 uid="uid://d2pob0ffnaeal"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_qihp8"]
+[ext_resource type="AudioStream" uid="uid://dcuu7qi4sshe0" path="res://Assets/Music/Shooter Synthwave 1 Loop.wav" id="2_310sd"]
 [ext_resource type="Script" path="res://Scripts/camera_container.gd" id="2_rroqn"]
+[ext_resource type="FontFile" uid="uid://d1ndhqw8y1fjs" path="res://Assets/Fonts/kenney_mini_square.ttf" id="2_u3es3"]
+[ext_resource type="PackedScene" uid="uid://en6lkyndhc0t" path="res://Scenes/pause_screen.tscn" id="3_fnglv"]
 [ext_resource type="PackedScene" uid="uid://cpx1ygw3suhcn" path="res://Scenes/player.tscn" id="3_uj7fh"]
 [ext_resource type="PackedScene" uid="uid://dwgdoxctxjlc0" path="res://Scenes/ladder.tscn" id="3_wcnyj"]
 [ext_resource type="Texture2D" uid="uid://cet5ypxdip8ei" path="res://Assets/Tilesets/Dead Tileset V1.png" id="5_eayi0"]
@@ -10,6 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://bp6qgy6dr1edk" path="res://Assets/Tilesets/SCi-fi-Planet one Add ons v1.png" id="6_di7bd"]
 [ext_resource type="PackedScene" uid="uid://cj0dma3dx8ju" path="res://Scenes/tank_bot.tscn" id="7_7je4c"]
 [ext_resource type="PackedScene" uid="uid://cq5lqarmml37j" path="res://Scenes/slice_bot.tscn" id="8_kg5sa"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wiw14"]
+font = ExtResource("2_u3es3")
+font_size = 24
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3bssg"]
 size = Vector2(4, 191)
@@ -646,6 +653,30 @@ sources/2 = SubResource("TileSetAtlasSource_ptp2v")
 [node name="World" type="Node2D"]
 script = ExtResource("1_qihp8")
 
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_310sd")
+volume_db = -5.0
+autoplay = true
+
+[node name="PauseScreen" parent="." instance=ExtResource("3_fnglv")]
+visible = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -39.0
+offset_top = 6.0
+offset_right = 39.0
+offset_bottom = 29.0
+grow_horizontal = 2
+text = "Kills: 999"
+label_settings = SubResource("LabelSettings_wiw14")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="CameraContainer" type="Node2D" parent="."]
 script = ExtResource("2_rroqn")
 
@@ -672,10 +703,14 @@ position = Vector2(545, 335)
 
 [node name="EnemyWaveSpawner" parent="Enemies" instance=ExtResource("5_q0o1e")]
 position = Vector2(0, 335)
+wave_start_delay = 2.0
+enemy_spawn_delay = 4.0
 
 [node name="EnemyWaveSpawner2" parent="Enemies" instance=ExtResource("5_q0o1e")]
 position = Vector2(640, 335)
 enemy_run_direction = -1
+wave_start_delay = 30.0
+enemy_spawn_delay = 3.0
 
 [node name="Ladders" type="Node" parent="."]
 

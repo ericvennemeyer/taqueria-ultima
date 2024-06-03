@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://en6lkyndhc0t"]
+
+[ext_resource type="FontFile" uid="uid://cpqgtjfuwlt76" path="res://Assets/Fonts/Trigram-Regular.ttf" id="1_0jovu"]
+[ext_resource type="Script" path="res://Scripts/pause_screen.gd" id="1_1hnu6"]
+[ext_resource type="FontFile" uid="uid://d1ndhqw8y1fjs" path="res://Assets/Fonts/kenney_mini_square.ttf" id="2_8nynn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_oqspp"]
+font = ExtResource("1_0jovu")
+font_size = 24
+font_color = Color(1, 0, 0, 1)
+
+[node name="PauseScreen" type="CanvasLayer"]
+process_mode = 2
+script = ExtResource("1_1hnu6")
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(1, 1, 1, 0.701961)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="PauseLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_oqspp")
+
+[node name="ResumeButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_8nynn")
+theme_override_font_sizes/font_size = 16
+text = "RESUME"
+
+[node name="RestartButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_8nynn")
+theme_override_font_sizes/font_size = 16
+text = "RESTART"
+
+[node name="MainMenuButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_8nynn")
+theme_override_font_sizes/font_size = 16
+text = "MAIN MENU"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

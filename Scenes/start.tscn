@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://bt741cp1mrw7s"]
+
+[ext_resource type="Script" path="res://Scripts/start.gd" id="1_iocsc"]
+[ext_resource type="FontFile" uid="uid://cpqgtjfuwlt76" path="res://Assets/Fonts/Trigram-Regular.ttf" id="2_sl216"]
+[ext_resource type="FontFile" uid="uid://d1ndhqw8y1fjs" path="res://Assets/Fonts/kenney_mini_square.ttf" id="3_jrrlu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u3e27"]
+font = ExtResource("2_sl216")
+font_size = 32
+font_color = Color(1, 0, 0, 1)
+
+[node name="Start" type="CanvasLayer"]
+script = ExtResource("1_iocsc")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "TAQUERIA ULTIMA"
+label_settings = SubResource("LabelSettings_u3e27")
+
+[node name="StartButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_jrrlu")
+theme_override_font_sizes/font_size = 24
+text = "START"
+
+[node name="ControlsButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_jrrlu")
+theme_override_font_sizes/font_size = 24
+text = "CONTROLS
+"
+
+[node name="CreditsButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_jrrlu")
+theme_override_font_sizes/font_size = 24
+text = "CREDITS"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ControlsButton" to="." method="_on_controls_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]

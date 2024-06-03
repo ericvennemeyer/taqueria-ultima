@@ -11,6 +11,7 @@ var character_type = "tank_bot"
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var is_moving = false
 var is_attacking = false
 var fire_rate_countdown = 0.0
 
@@ -22,7 +23,9 @@ var is_alive = true
 @onready var spawner_component: SpawnerComponent = $Sprites/SpawnerComponent
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var explosion_spawner: SpawnerComponent = $ExplosionSpawner
-#@onready var shake_component: ShakeComponent = $ShakeComponent
+@onready var attack_sfx: AudioStreamPlayer = $AttackSFX
+@onready var hurt_sfx: AudioStreamPlayer = $HurtSFX
+@onready var move_sfx: AudioStreamPlayer = $MoveSFX
 
 
 func _ready() -> void:
@@ -38,6 +41,7 @@ func _physics_process(delta):
 	if is_active:
 		handle_acceleration(input_axis, delta)
 		handle_attack()
+		#handle_sfx()
 	else:
 		input_axis = 0
 	apply_friction(input_axis, delta)
@@ -63,6 +67,7 @@ func handle_attack():
 
 
 func fire_bullet():
+	attack_sfx.play()
 	var bullet = spawner_component.spawn()
 	bullet.move_component.velocity.x = bullet.move_component.velocity.x * sprites.scale.x
 	tankbot_gun_fired.emit()
@@ -75,14 +80,23 @@ func handle_hurt():
 		animation_player.play("hurt")
 
 
+#func handle_sfx():
+	#if is_moving:
+		#move_sfx.play()
+	#else:
+		#move_sfx.stop()
+
+
 func handle_acceleration(input_axis, delta):
 	if not is_on_floor() or is_attacking: return
 	if input_axis != 0:
+		is_moving = true
 		velocity.x = move_toward(velocity.x, input_axis * movement_data.speed, movement_data.acceleration * delta)
 
 
 func apply_friction(input_axis, delta):
 	if input_axis == 0 and is_on_floor():
+		is_moving = false
 		velocity.x = move_toward(velocity.x, 0, movement_data.friction * delta)
 
 

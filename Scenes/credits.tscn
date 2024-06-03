@@ -1,0 +1,124 @@
+[gd_scene load_steps=7 format=3 uid="uid://nkgb7pojj0un"]
+
+[ext_resource type="Script" path="res://Scripts/controls.gd" id="1_87rfk"]
+[ext_resource type="FontFile" uid="uid://cpqgtjfuwlt76" path="res://Assets/Fonts/Trigram-Regular.ttf" id="2_dec2h"]
+[ext_resource type="FontFile" uid="uid://d1ndhqw8y1fjs" path="res://Assets/Fonts/kenney_mini_square.ttf" id="3_7cw4i"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_io6qi"]
+font = ExtResource("2_dec2h")
+font_size = 24
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7vrpi"]
+font = ExtResource("3_7cw4i")
+
+[sub_resource type="LabelSettings" id="LabelSettings_yigdt"]
+font = ExtResource("3_7cw4i")
+font_size = 8
+
+[node name="Controls" type="CanvasLayer"]
+script = ExtResource("1_87rfk")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="ControlsLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "CREDITS"
+label_settings = SubResource("LabelSettings_io6qi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HeadingLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "art"
+label_settings = SubResource("LabelSettings_7vrpi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BodyLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "cyberpunk character and city enemies sprites -- free game assets (free-game-assets.itch.io)"
+label_settings = SubResource("LabelSettings_yigdt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BodyLabel2" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "dead tileset -- penusbmic (penusbmic.itch.io)"
+label_settings = SubResource("LabelSettings_yigdt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HeadingLabel2" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "music"
+label_settings = SubResource("LabelSettings_7vrpi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BodyLabel3" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "free synthwave shooter music pack -- alkakrab (alkakrab.itch.io)"
+label_settings = SubResource("LabelSettings_yigdt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HeadingLabel3" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "sfx"
+label_settings = SubResource("LabelSettings_7vrpi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BodyLabel4" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Snake's authentic gun sounds -- snakef8 (f8studios.itch.io)"
+label_settings = SubResource("LabelSettings_yigdt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BodyLabel5" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "pain sounds (male) audio pack -- voicebosch (voicebosch.itch.io)"
+label_settings = SubResource("LabelSettings_yigdt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BodyLabel6" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "blade runner blaster sound -- aris621 (freesound.org/people/Aris621)"
+label_settings = SubResource("LabelSettings_yigdt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HeadingLabel4" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "fonts
+"
+label_settings = SubResource("LabelSettings_7vrpi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BodyLabel7" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "trigram -- ggbotnet (ggbot.itch.io)"
+label_settings = SubResource("LabelSettings_yigdt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BodyLabel8" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "kenney mini square -- kenney assets (www.kenney.nl/assets/kenney-fonts)"
+label_settings = SubResource("LabelSettings_yigdt")
+horizontal_alignment = 1
+vertical_alignment = 1

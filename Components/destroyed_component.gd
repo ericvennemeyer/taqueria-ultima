@@ -11,6 +11,8 @@ extends Node
 # Export and grab access to a spawner component so we can create an effect on death
 @export var destroy_effect_spawner_component: SpawnerComponent
 
+@export var death_sfx: AudioStreamPlayer
+
 func _ready() -> void:
 	# Connect the the no health signal on our stats to the destroy function
 	stats_component.no_health.connect(destroy)
@@ -19,5 +21,7 @@ func destroy() -> void:
 	# create an effect (from the spawner component) and free the actor
 	if destroy_effect_spawner_component:
 		destroy_effect_spawner_component.spawn(actor.global_position)
+	if death_sfx:
+		death_sfx.play()
 	actor.is_alive = false
 	actor.animation_player.play("death")

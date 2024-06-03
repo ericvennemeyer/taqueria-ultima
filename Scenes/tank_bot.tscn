@@ -1,13 +1,15 @@
-[gd_scene load_steps=20 format=3 uid="uid://cj0dma3dx8ju"]
+[gd_scene load_steps=22 format=3 uid="uid://cj0dma3dx8ju"]
 
 [ext_resource type="PackedScene" uid="uid://c76tontoxnues" path="res://Scenes/bot_base_scene.tscn" id="1_v443o"]
 [ext_resource type="Script" path="res://Scripts/tank_bot.gd" id="2_23eb1"]
 [ext_resource type="Texture2D" uid="uid://w63w4c1hu0v6" path="res://Assets/Sprites/Tank Bot/Idle.png" id="2_pwp2y"]
 [ext_resource type="Resource" uid="uid://ck7la52gdrxvy" path="res://Resources/default_tankbot_movement_data.tres" id="3_86up7"]
 [ext_resource type="Texture2D" uid="uid://cllveoyt4kf7h" path="res://Assets/Sprites/Tank Bot/Walk.png" id="3_vrg04"]
+[ext_resource type="AudioStream" uid="uid://dp60s4o7pga8b" path="res://Assets/SFX/420687__aris621__blade-runner-blaster-sound.wav" id="4_3nmmg"]
 [ext_resource type="Texture2D" uid="uid://c4r62bu0wo57a" path="res://Assets/Sprites/Tank Bot/Attack.png" id="4_lguns"]
 [ext_resource type="PackedScene" uid="uid://bg2cklco3wdjr" path="res://Scenes/tank_bot_bullet.tscn" id="5_21ila"]
 [ext_resource type="Texture2D" uid="uid://c1j68hubw7ugy" path="res://Assets/Sprites/Tank Bot/Death.png" id="5_e3cb0"]
+[ext_resource type="AudioStream" uid="uid://c208pj14f5u6k" path="res://Assets/SFX/541240__garuda1982__tank-bulldozer-tracked-vehicle-sound-effect-atmo.wav" id="5_jslqr"]
 [ext_resource type="Texture2D" uid="uid://dy0te0gw1wt11" path="res://Assets/Sprites/Tank Bot/Hurt.png" id="6_su8vv"]
 [ext_resource type="Script" path="res://Components/spawner_component.gd" id="7_20541"]
 
@@ -258,26 +260,33 @@ script = ExtResource("2_23eb1")
 movement_data = ExtResource("3_86up7")
 metadata/_edit_vertical_guides_ = [-10.0, 9.0]
 
-[node name="CollisionShape2D" parent="." index="0"]
+[node name="AttackSFX" parent="." index="0"]
+stream = ExtResource("4_3nmmg")
+volume_db = -5.0
+
+[node name="MoveSFX" parent="." index="2"]
+stream = ExtResource("5_jslqr")
+
+[node name="CollisionShape2D" parent="." index="3"]
 position = Vector2(1.5, -4.75)
 shape = SubResource("RectangleShape2D_h3kkn")
 
-[node name="HurtboxComponent" parent="." index="1"]
+[node name="HurtboxComponent" parent="." index="4"]
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
 position = Vector2(2, -15.5)
 shape = SubResource("RectangleShape2D_6bl5u")
 
-[node name="SelectionIndicatorSprite" parent="." index="2"]
+[node name="SelectionIndicatorSprite" parent="." index="5"]
 visible = false
 
-[node name="HealthBar" parent="." index="3" node_paths=PackedStringArray("stats_component")]
+[node name="HealthBar" parent="." index="6" node_paths=PackedStringArray("stats_component")]
 offset_top = -39.0
 offset_bottom = -35.0
 stats_component = NodePath("../StatsComponent")
 
-[node name="HurtComponent" parent="." index="5" node_paths=PackedStringArray("stats_component", "hurtbox_component", "health_bar")]
+[node name="HurtComponent" parent="." index="8" node_paths=PackedStringArray("stats_component", "hurtbox_component", "health_bar")]
 stats_component = NodePath("../StatsComponent")
 hurtbox_component = NodePath("../HurtboxComponent")
 health_bar = NodePath("../HealthBar")
@@ -292,20 +301,20 @@ position = Vector2(18, -18)
 script = ExtResource("7_20541")
 scene = ExtResource("5_21ila")
 
-[node name="AnimationPlayer" parent="." index="7"]
+[node name="AnimationPlayer" parent="." index="10"]
 libraries = {
 "": SubResource("AnimationLibrary_xj1tl")
 }
 autoplay = "idle"
 
-[node name="BorderBounceComponent" parent="." index="8" node_paths=PackedStringArray("actor")]
+[node name="BorderBounceComponent" parent="." index="11" node_paths=PackedStringArray("actor")]
 actor = NodePath("..")
 
-[node name="DestroyedComponent" parent="." index="9" node_paths=PackedStringArray("actor", "stats_component")]
+[node name="DestroyedComponent" parent="." index="12" node_paths=PackedStringArray("actor", "stats_component")]
 actor = NodePath("..")
 stats_component = NodePath("../StatsComponent")
 
-[node name="ExplosionSpawner" parent="." index="10"]
+[node name="ExplosionSpawner" parent="." index="13"]
 position = Vector2(2, -11)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

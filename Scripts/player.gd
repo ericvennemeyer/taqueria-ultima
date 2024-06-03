@@ -27,6 +27,8 @@ var is_alive = true
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var spawner_component: SpawnerComponent = $Sprites/SpawnerComponent
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var gunshot_sfx: AudioStreamPlayer = $GunshotSFX
+@onready var hurt_sfx: AudioStreamPlayer = $HurtSFX
 
 
 func _ready() -> void:
@@ -101,6 +103,7 @@ func handle_attack():
 
 
 func fire_bullet():
+	gunshot_sfx.play()
 	var bullet = spawner_component.spawn()
 	bullet.move_component.velocity.x = bullet.move_component.velocity.x * sprites.scale.x
 	hero_gun_fired.emit()
@@ -109,6 +112,7 @@ func fire_bullet():
 func handle_hurt():
 	#is_active = false
 	if is_alive:
+		hurt_sfx.play()
 		#hurtbox_component.is_invincible = true
 		animation_player.play("hurt")
 
@@ -161,8 +165,8 @@ func update_animations(input_axis):
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "hurt":
-		#is_active = true
-		hurtbox_component.is_invincible = false
-	elif anim_name == "death":
+	#if anim_name == "hurt":
+		##is_active = true
+		#hurtbox_component.is_invincible = false
+	if anim_name == "death":
 		player_died.emit(character_type)

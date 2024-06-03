@@ -25,6 +25,12 @@ collision_layer = 2
 collision_mask = 5
 metadata/_edit_vertical_guides_ = []
 
+[node name="AttackSFX" type="AudioStreamPlayer" parent="."]
+
+[node name="HurtSFX" type="AudioStreamPlayer" parent="."]
+
+[node name="MoveSFX" type="AudioStreamPlayer" parent="."]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-8.01086e-05, -16)
 shape = SubResource("RectangleShape2D_5n2xv")

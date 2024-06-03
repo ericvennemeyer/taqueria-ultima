@@ -13,7 +13,6 @@ scene = ExtResource("2_v35b8")
 
 [node name="WaveStartDelayTimer" type="Timer" parent="."]
 one_shot = true
-autostart = true
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
 wait_time = 2.0

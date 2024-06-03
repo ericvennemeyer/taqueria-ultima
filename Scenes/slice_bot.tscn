@@ -19,6 +19,9 @@ size = Vector2(21, 29)
 resource_local_to_scene = true
 size = Vector2(19, 24)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_thrjo"]
+size = Vector2(36, 7)
+
 [sub_resource type="Animation" id="Animation_vr23a"]
 length = 0.001
 tracks/0/type = "value"
@@ -252,9 +255,6 @@ _data = {
 "walk": SubResource("Animation_nhn6w")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_thrjo"]
-size = Vector2(36, 7)
-
 [node name="SliceBot" instance=ExtResource("1_w366l")]
 z_index = 5
 script = ExtResource("2_djnog")
@@ -263,41 +263,25 @@ dash_ghost_image = ExtResource("4_mgysq")
 dash_scale = 1.0
 dash_duration = 0.2
 
-[node name="CollisionShape2D" parent="." index="0"]
+[node name="CollisionShape2D" parent="." index="3"]
 position = Vector2(-0.5, -14.5)
 shape = SubResource("RectangleShape2D_hla7u")
 
-[node name="HurtboxComponent" parent="." index="1"]
+[node name="HurtboxComponent" parent="." index="4"]
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
 position = Vector2(-0.5, -12)
 shape = SubResource("RectangleShape2D_3fxss")
 
-[node name="SelectionIndicatorSprite" parent="." index="2"]
+[node name="SelectionIndicatorSprite" parent="." index="5"]
 visible = false
 position = Vector2(0, -36)
 
-[node name="HealthBar" parent="." index="3" node_paths=PackedStringArray("stats_component")]
+[node name="HealthBar" parent="." index="6" node_paths=PackedStringArray("stats_component")]
 offset_top = -29.0
 offset_bottom = -25.0
 stats_component = NodePath("../StatsComponent")
-
-[node name="HurtComponent" parent="." index="5" node_paths=PackedStringArray("stats_component", "hurtbox_component", "health_bar")]
-stats_component = NodePath("../StatsComponent")
-hurtbox_component = NodePath("../HurtboxComponent")
-health_bar = NodePath("../HealthBar")
-
-[node name="Sprite2D" parent="Sprites" index="0"]
-position = Vector2(8, -24)
-texture = ExtResource("6_gm444")
-hframes = 4
-
-[node name="AnimationPlayer" parent="." index="7"]
-libraries = {
-"": SubResource("AnimationLibrary_k4nld")
-}
-autoplay = "idle"
 
 [node name="HitboxComponent" type="Area2D" parent="." index="8"]
 collision_layer = 2
@@ -316,15 +300,31 @@ one_shot = true
 [node name="GhostTimer" type="Timer" parent="." index="10"]
 wait_time = 0.03
 
-[node name="BorderBounceComponent" parent="." index="11" node_paths=PackedStringArray("actor")]
+[node name="HurtComponent" parent="." index="11" node_paths=PackedStringArray("stats_component", "hurtbox_component", "health_bar")]
+stats_component = NodePath("../StatsComponent")
+hurtbox_component = NodePath("../HurtboxComponent")
+health_bar = NodePath("../HealthBar")
+
+[node name="Sprite2D" parent="Sprites" index="0"]
+position = Vector2(8, -24)
+texture = ExtResource("6_gm444")
+hframes = 4
+
+[node name="AnimationPlayer" parent="." index="13"]
+libraries = {
+"": SubResource("AnimationLibrary_k4nld")
+}
+autoplay = "idle"
+
+[node name="BorderBounceComponent" parent="." index="14" node_paths=PackedStringArray("actor")]
 actor = NodePath("..")
 
-[node name="DestroyedComponent" parent="." index="12" node_paths=PackedStringArray("actor", "stats_component")]
+[node name="DestroyedComponent" parent="." index="15" node_paths=PackedStringArray("actor", "stats_component")]
 actor = NodePath("..")
 stats_component = NodePath("../StatsComponent")
 
-[node name="ExplosionSpawner" parent="." index="13"]
+[node name="ExplosionSpawner" parent="." index="16"]
 position = Vector2(0, -8)
 
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_attack_cooldown_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

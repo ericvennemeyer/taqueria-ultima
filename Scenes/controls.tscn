@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://n7w27ryj2tbj"]
+
+[ext_resource type="Script" path="res://Scripts/controls.gd" id="1_27ejw"]
+[ext_resource type="FontFile" uid="uid://cpqgtjfuwlt76" path="res://Assets/Fonts/Trigram-Regular.ttf" id="1_obuam"]
+[ext_resource type="FontFile" uid="uid://d1ndhqw8y1fjs" path="res://Assets/Fonts/kenney_mini_square.ttf" id="2_5y460"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_io6qi"]
+font = ExtResource("1_obuam")
+font_size = 32
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7vrpi"]
+font = ExtResource("2_5y460")
+
+[node name="Controls" type="CanvasLayer"]
+script = ExtResource("1_27ejw")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="ControlsLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "CONTROLS"
+label_settings = SubResource("LabelSettings_io6qi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Move left and right: 
+a/d or left arrow/right arrow"
+label_settings = SubResource("LabelSettings_7vrpi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "climb ladder (human only): 
+w/s or up arrow/down arrow"
+label_settings = SubResource("LabelSettings_7vrpi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "jump: spacebar"
+label_settings = SubResource("LabelSettings_7vrpi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "attack: k"
+label_settings = SubResource("LabelSettings_7vrpi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "switch player: enter"
+label_settings = SubResource("LabelSettings_7vrpi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label6" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "pause: p"
+label_settings = SubResource("LabelSettings_7vrpi")
+horizontal_alignment = 1
+vertical_alignment = 1

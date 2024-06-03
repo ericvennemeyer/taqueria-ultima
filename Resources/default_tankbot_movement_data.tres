@@ -12,5 +12,5 @@ jump_velocity = 2.08165e-12
 gravity_scale = 1.0
 air_resistance = 2.08165e-12
 climb_velocity = 2.08165e-12
-fire_rate = 0.6
+fire_rate = 0.4
 knockback_amount = 2

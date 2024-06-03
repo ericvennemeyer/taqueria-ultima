@@ -4,6 +4,8 @@ var player_characters_array: Array[Node]
 var current_player
 var score: int = 0
 
+@onready var pause_screen: CanvasLayer = $PauseScreen
+@onready var score_label: Label = $CanvasLayer/ScoreLabel
 @onready var camera_container: Node2D = $CameraContainer
 @onready var camera_2d: Camera2D = $CameraContainer/Camera2D
 @onready var player_controlled: Node = $"Player-Controlled"
@@ -12,6 +14,11 @@ var score: int = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color(0.20000000298023, 0.36078432202339, 0.35686275362968))
+	LevelTransition.fade_from_black()
+	pause_screen.visible = false
+	pause_screen.unpause.connect(_on_unpause_game)
+	pause_screen.restart.connect(_on_restart_game)
+	score_label.text = "Kills: " + str(score)
 	
 	player_characters_array = player_controlled.get_children()
 	for player in player_characters_array:
@@ -32,6 +39,21 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("change_player"):
 		change_player_character()
+	elif  Input.is_action_just_pressed("pause"):
+		pause_screen.visible = true
+		get_tree().paused = true
+		pause_screen.resume_button.grab_focus()
+
+
+func _on_unpause_game():
+	pause_screen.visible = false
+	get_tree().paused = false
+
+
+func _on_restart_game():
+	pause_screen.visible = false
+	get_tree().paused = false
+	get_tree().reload_current_scene()
 
 
 func change_player_character():
@@ -51,12 +73,16 @@ func change_player_character():
 
 func increase_score():
 	score += 1
-	print(score)
+	ScoreKeeper.score = score
+	print(ScoreKeeper.score)
+	score_label.text = "Kills: " + str(score)
 
 
 func _on_player_died(character: String):
 	if character == "hero":
-		print("Game Over")
+		await LevelTransition.fade_to_red()
+		get_tree().change_scene_to_file("res://Scenes/game_over.tscn")
+		LevelTransition.fade_from_red()
 	else:
 		#var index
 		#for player in player_characters_array:

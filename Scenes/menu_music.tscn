@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjt28ogalrnxy"]
+
+[ext_resource type="AudioStream" uid="uid://bemj76haftpcx" path="res://Assets/Music/(Soft Loop For Dialogues, Pause or Other Things) 9.wav" id="1_2b6vo"]
+
+[node name="MenuMusic" type="AudioStreamPlayer"]
+stream = ExtResource("1_2b6vo")
+volume_db = -6.0
+autoplay = true
