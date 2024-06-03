@@ -4,6 +4,7 @@ var player_characters_array: Array[Node]
 var current_player
 var score: int = 0
 
+@onready var camera_container: Node2D = $CameraContainer
 @onready var camera_2d: Camera2D = $CameraContainer/Camera2D
 @onready var player_controlled: Node = $"Player-Controlled"
 @onready var enemies: Node = $Enemies
@@ -64,3 +65,11 @@ func _on_player_died(character: String):
 				#index = player_characters_array.find(player)
 		#player_characters_array.remove_at(index)
 		pass
+
+
+func _on_player_hero_gun_fired() -> void:
+	camera_container.tween_shake(10.0, 0.2)
+
+
+func _on_tank_bot_tankbot_gun_fired() -> void:
+	camera_container.tween_shake(20.0, 0.4)

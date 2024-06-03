@@ -1,6 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
+signal hero_gun_fired
 signal player_died(character)
 
 @export var movement_data: PlayerMovementData
@@ -26,7 +27,6 @@ var is_alive = true
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var spawner_component: SpawnerComponent = $Sprites/SpawnerComponent
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
-@onready var shake_component: ShakeComponent = $ShakeComponent
 
 
 func _ready() -> void:
@@ -103,7 +103,7 @@ func handle_attack():
 func fire_bullet():
 	var bullet = spawner_component.spawn()
 	bullet.move_component.velocity.x = bullet.move_component.velocity.x * sprites.scale.x
-	shake_component.tween_shake()
+	hero_gun_fired.emit()
 
 
 func handle_hurt():

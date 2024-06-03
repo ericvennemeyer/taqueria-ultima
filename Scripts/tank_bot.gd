@@ -1,6 +1,7 @@
 class_name TankBot
 extends CharacterBody2D
 
+signal tankbot_gun_fired
 signal player_died(character)
 
 @export var movement_data: PlayerMovementData
@@ -64,7 +65,7 @@ func handle_attack():
 func fire_bullet():
 	var bullet = spawner_component.spawn()
 	bullet.move_component.velocity.x = bullet.move_component.velocity.x * sprites.scale.x
-	#shake_component.tween_shake()
+	tankbot_gun_fired.emit()
 
 
 func handle_hurt():
