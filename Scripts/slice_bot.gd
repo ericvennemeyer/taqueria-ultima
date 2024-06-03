@@ -70,8 +70,8 @@ func handle_attack(delta):
 		hitbox_collision_shape.disabled = true
 		hurtbox_collision_shape.disabled = false
 		
-		is_active = false
-		attack_cooldown_timer.start()
+		#is_active = false
+		#attack_cooldown_timer.start()
 		
 	else:
 		is_attacking = false
@@ -122,4 +122,5 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 
 func _on_attack_cooldown_timer_timeout() -> void:
-	is_active = true
+	#is_active = true
+	pass

@@ -17,6 +17,7 @@ var is_alive = true
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprites: Node2D = $Sprites
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var border_bounce_component: BorderBounceComponent = $BorderBounceComponent
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
@@ -81,6 +82,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		set_collision_layer_value(3, false)
 		hurtbox_component.set_collision_layer_value(3, false)
 		hurtbox_component.set_collision_mask_value(2, false)
+		hitbox_component.set_collision_layer_value(3, false)
+		hitbox_component.set_collision_mask_value(2, false)
 		enemy_death.emit()
 
 

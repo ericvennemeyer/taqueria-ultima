@@ -697,20 +697,20 @@ position = Vector2(320, 240)
 position = Vector2(368, 335)
 
 [node name="SliceBot" parent="Player-Controlled" instance=ExtResource("8_kg5sa")]
-position = Vector2(545, 335)
+position = Vector2(254, 335)
 
 [node name="Enemies" type="Node" parent="."]
 
 [node name="EnemyWaveSpawner" parent="Enemies" instance=ExtResource("5_q0o1e")]
 position = Vector2(0, 335)
 wave_start_delay = 2.0
-enemy_spawn_delay = 4.0
+enemy_spawn_delay = 5.0
 
 [node name="EnemyWaveSpawner2" parent="Enemies" instance=ExtResource("5_q0o1e")]
 position = Vector2(640, 335)
 enemy_run_direction = -1
 wave_start_delay = 30.0
-enemy_spawn_delay = 3.0
+enemy_spawn_delay = 6.0
 
 [node name="Ladders" type="Node" parent="."]
 
