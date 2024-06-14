@@ -994,8 +994,9 @@ character = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
 current_state = NodePath("GroundState")
 
-[node name="GroundState" type="Node" parent="CharacterStateMachine"]
+[node name="GroundState" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("jump_state")]
 script = ExtResource("30_12555")
+jump_state = NodePath("../JumpState")
 
 [node name="JumpState" type="Node" parent="CharacterStateMachine"]
 script = ExtResource("31_w3k20")
