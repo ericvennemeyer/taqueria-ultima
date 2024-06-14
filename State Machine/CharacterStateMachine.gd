@@ -28,11 +28,11 @@ func _ready() -> void:
 			push_warning("Child " + child.name + " is not a state for CharacterStateMachine")
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if current_state.next_state != null:
 		switch_states(current_state.next_state)
 	
-	current_state.state_process(delta)
+	current_state.state_physics_process(delta)
 
 
 func check_if_can_move():

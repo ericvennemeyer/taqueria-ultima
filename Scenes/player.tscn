@@ -988,8 +988,11 @@ death_sfx = NodePath("../DeathSFX")
 script = ExtResource("22_8x8n8")
 actor = NodePath("..")
 
-[node name="CharacterStateMachine" type="Node" parent="."]
+[node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animation_player", "current_state")]
 script = ExtResource("29_uh6ac")
+character = NodePath("..")
+animation_player = NodePath("../AnimationPlayer")
+current_state = NodePath("GroundState")
 
 [node name="GroundState" type="Node" parent="CharacterStateMachine"]
 script = ExtResource("30_12555")

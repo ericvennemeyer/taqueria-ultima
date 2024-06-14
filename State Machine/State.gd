@@ -10,7 +10,7 @@ var animation_player: AnimationPlayer
 var next_state: State
 
 
-func state_process(delta):
+func state_physics_process(delta):
 	pass
 
 
