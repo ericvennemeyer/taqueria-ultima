@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://cpx1ygw3suhcn"]
+[gd_scene load_steps=49 format=3 uid="uid://cpx1ygw3suhcn"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_c0gef"]
 [ext_resource type="Resource" uid="uid://daje6twscisj6" path="res://Resources/default_player_movement_data.tres" id="2_vxcgb"]
@@ -31,6 +31,9 @@
 [ext_resource type="Script" path="res://State Machine/CharacterStateMachine.gd" id="29_uh6ac"]
 [ext_resource type="Script" path="res://Scripts/ground_state.gd" id="30_12555"]
 [ext_resource type="Script" path="res://Scripts/jump_state.gd" id="31_w3k20"]
+[ext_resource type="Script" path="res://Scripts/climb_state.gd" id="32_alyof"]
+[ext_resource type="Script" path="res://Scripts/hurt_state.gd" id="33_3ph33"]
+[ext_resource type="Script" path="res://Scripts/death_state.gd" id="34_vccsh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5n2xv"]
 size = Vector2(16, 32)
@@ -1000,5 +1003,14 @@ jump_state = NodePath("../JumpState")
 
 [node name="JumpState" type="Node" parent="CharacterStateMachine"]
 script = ExtResource("31_w3k20")
+
+[node name="ClimbState" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("32_alyof")
+
+[node name="HurtState" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("33_3ph33")
+
+[node name="DeathState" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("34_vccsh")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
