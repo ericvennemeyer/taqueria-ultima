@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://cpx1ygw3suhcn"]
+[gd_scene load_steps=46 format=3 uid="uid://cpx1ygw3suhcn"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_c0gef"]
 [ext_resource type="Resource" uid="uid://daje6twscisj6" path="res://Resources/default_player_movement_data.tres" id="2_vxcgb"]
@@ -28,12 +28,12 @@
 [ext_resource type="PackedScene" uid="uid://bgth4on0fwjle" path="res://Scenes/hero_bullet.tscn" id="21_2tudg"]
 [ext_resource type="Script" path="res://Components/border_bounce_component.gd" id="22_8x8n8"]
 [ext_resource type="Script" path="res://Components/destroyed_component.gd" id="24_h362q"]
+[ext_resource type="Script" path="res://State Machine/CharacterStateMachine.gd" id="29_uh6ac"]
+[ext_resource type="Script" path="res://Scripts/ground_state.gd" id="30_12555"]
+[ext_resource type="Script" path="res://Scripts/jump_state.gd" id="31_w3k20"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5n2xv"]
 size = Vector2(16, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxdjp"]
-size = Vector2(12, 27)
 
 [sub_resource type="Animation" id="Animation_m1dtv"]
 length = 0.001
@@ -875,12 +875,19 @@ _data = {
 "run_attack": SubResource("Animation_6mqwm")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxdjp"]
+size = Vector2(12, 27)
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_c0gef")
 movement_data = ExtResource("2_vxcgb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-8.01086e-05, -16)
+shape = SubResource("RectangleShape2D_5n2xv")
 
 [node name="GunshotSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_3jsjb")
@@ -891,19 +898,6 @@ stream = ExtResource("4_y2bnw")
 [node name="DeathSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_boqwp")
 volume_db = -2.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-8.01086e-05, -16)
-shape = SubResource("RectangleShape2D_5n2xv")
-
-[node name="HurtboxComponent" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 4
-script = ExtResource("9_irjgc")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
-position = Vector2(0, -15.5)
-shape = SubResource("RectangleShape2D_qxdjp")
 
 [node name="HealthBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("stats_component")]
 z_index = 15
@@ -948,8 +942,8 @@ texture = ExtResource("6_6gery")
 
 [node name="MainSprite" type="Sprite2D" parent="Sprites"]
 position = Vector2(10, -24)
-texture = ExtResource("11_24qn5")
-hframes = 2
+texture = ExtResource("13_lq6ie")
+hframes = 4
 
 [node name="SpawnerComponent" type="Node2D" parent="Sprites"]
 position = Vector2(31, -26)
@@ -975,6 +969,15 @@ stats_component = NodePath("../StatsComponent")
 hurtbox_component = NodePath("../HurtboxComponent")
 health_bar = NodePath("../HealthBar")
 
+[node name="HurtboxComponent" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("9_irjgc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -15.5)
+shape = SubResource("RectangleShape2D_qxdjp")
+
 [node name="DestroyedComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "stats_component", "death_sfx")]
 script = ExtResource("24_h362q")
 actor = NodePath("..")
@@ -984,5 +987,14 @@ death_sfx = NodePath("../DeathSFX")
 [node name="BorderBounceComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("22_8x8n8")
 actor = NodePath("..")
+
+[node name="CharacterStateMachine" type="Node" parent="."]
+script = ExtResource("29_uh6ac")
+
+[node name="GroundState" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("30_12555")
+
+[node name="JumpState" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("31_w3k20")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
