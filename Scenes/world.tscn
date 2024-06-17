@@ -657,6 +657,7 @@ script = ExtResource("1_qihp8")
 stream = ExtResource("2_310sd")
 volume_db = -5.0
 autoplay = true
+bus = &"Music"
 
 [node name="PauseScreen" parent="." instance=ExtResource("3_fnglv")]
 visible = false

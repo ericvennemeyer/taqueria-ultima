@@ -263,6 +263,15 @@ dash_ghost_image = ExtResource("4_mgysq")
 dash_scale = 1.0
 dash_duration = 0.2
 
+[node name="AttackSFX" parent="." index="0"]
+bus = &"SFX"
+
+[node name="HurtSFX" parent="." index="1"]
+bus = &"SFX"
+
+[node name="MoveSFX" parent="." index="2"]
+bus = &"SFX"
+
 [node name="CollisionShape2D" parent="." index="3"]
 position = Vector2(-0.5, -14.5)
 shape = SubResource("RectangleShape2D_hla7u")

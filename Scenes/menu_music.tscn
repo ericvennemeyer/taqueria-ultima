@@ -5,3 +5,4 @@
 [node name="MenuMusic" type="AudioStreamPlayer"]
 stream = ExtResource("1_2b6vo")
 volume_db = -6.0
+bus = &"Music"
