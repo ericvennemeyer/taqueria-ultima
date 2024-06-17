@@ -43,6 +43,7 @@ vertical_alignment = 1
 
 [node name="MasterSlider" type="HSlider" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
+max_value = 1.0
 step = 0.001
 script = ExtResource("3_d855d")
 bus_name = "Master"
@@ -56,6 +57,7 @@ vertical_alignment = 1
 
 [node name="MusicSlider" type="HSlider" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
+max_value = 1.0
 step = 0.001
 script = ExtResource("3_d855d")
 bus_name = "Music"
@@ -69,6 +71,7 @@ vertical_alignment = 1
 
 [node name="SFXSlider" type="HSlider" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
+max_value = 1.0
 step = 0.001
 script = ExtResource("3_d855d")
 bus_name = "SFX"
