@@ -1,0 +1,83 @@
+[gd_scene load_steps=7 format=3 uid="uid://7r43jup330n2"]
+
+[ext_resource type="FontFile" uid="uid://cpqgtjfuwlt76" path="res://Assets/Fonts/Trigram-Regular.ttf" id="1_5vlfq"]
+[ext_resource type="Script" path="res://audio_settings.gd" id="1_kf166"]
+[ext_resource type="FontFile" uid="uid://d1ndhqw8y1fjs" path="res://Assets/Fonts/kenney_mini_square.ttf" id="2_t2v2i"]
+[ext_resource type="Script" path="res://Scripts/audio_slider.gd" id="3_fbcbw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u3e27"]
+font = ExtResource("1_5vlfq")
+font_size = 32
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_nqqhi"]
+font = ExtResource("2_t2v2i")
+font_size = 24
+
+[node name="AudioSettings" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kf166")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "AUDIO"
+label_settings = SubResource("LabelSettings_u3e27")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MasterLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "MASTER VOLUME"
+label_settings = SubResource("LabelSettings_nqqhi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MasterSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("3_fbcbw")
+bus_name = "Master"
+
+[node name="MusicLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "MUSIC VOLUME"
+label_settings = SubResource("LabelSettings_nqqhi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("3_fbcbw")
+bus_name = "Music"
+
+[node name="SFXLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "SFX VOLUME"
+label_settings = SubResource("LabelSettings_nqqhi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("3_fbcbw")
+bus_name = "SFX"
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_t2v2i")
+theme_override_font_sizes/font_size = 24
+text = "BACK"
+
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

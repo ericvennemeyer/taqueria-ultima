@@ -1,85 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://2l76ripkma1m"]
+[gd_scene load_steps=3 format=3 uid="uid://2l76ripkma1m"]
 
 [ext_resource type="Script" path="res://Scripts/settings.gd" id="1_1yun3"]
-[ext_resource type="FontFile" uid="uid://cpqgtjfuwlt76" path="res://Assets/Fonts/Trigram-Regular.ttf" id="2_8oba8"]
-[ext_resource type="Script" path="res://Scripts/audio_slider.gd" id="3_d855d"]
-[ext_resource type="FontFile" uid="uid://d1ndhqw8y1fjs" path="res://Assets/Fonts/kenney_mini_square.ttf" id="3_f134g"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_u3e27"]
-font = ExtResource("2_8oba8")
-font_size = 32
-font_color = Color(1, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_nqqhi"]
-font = ExtResource("3_f134g")
-font_size = 24
+[ext_resource type="PackedScene" uid="uid://7r43jup330n2" path="res://audio_settings.tscn" id="2_jnjof"]
 
 [node name="Settings" type="CanvasLayer"]
 script = ExtResource("1_1yun3")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="AudioSettings" parent="." instance=ExtResource("2_jnjof")]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-layout_mode = 2
-
-[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "AUDIO"
-label_settings = SubResource("LabelSettings_u3e27")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MasterLabel" type="Label" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "MASTER VOLUME"
-label_settings = SubResource("LabelSettings_nqqhi")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MasterSlider" type="HSlider" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-max_value = 1.0
-step = 0.001
-script = ExtResource("3_d855d")
-bus_name = "Master"
-
-[node name="MusicLabel" type="Label" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "MUSIC VOLUME"
-label_settings = SubResource("LabelSettings_nqqhi")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MusicSlider" type="HSlider" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-max_value = 1.0
-step = 0.001
-script = ExtResource("3_d855d")
-bus_name = "Music"
-
-[node name="SFXLabel" type="Label" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "SFX VOLUME"
-label_settings = SubResource("LabelSettings_nqqhi")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SFXSlider" type="HSlider" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-max_value = 1.0
-step = 0.001
-script = ExtResource("3_d855d")
-bus_name = "SFX"
-
-[node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("3_f134g")
-theme_override_font_sizes/font_size = 24
-text = "BACK"
-
-[connection signal="pressed" from="CenterContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="audio_settings_back_button_pressed" from="AudioSettings" to="." method="_on_audio_settings_audio_settings_back_button_pressed"]
