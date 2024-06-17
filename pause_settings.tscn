@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://btb5b6vpr0c6s"]
+
+[ext_resource type="Script" path="res://pause_settings.gd" id="1_rvq8a"]
+[ext_resource type="PackedScene" uid="uid://7r43jup330n2" path="res://audio_settings.tscn" id="1_tsw4v"]
+
+[node name="PauseSettings" type="CanvasLayer"]
+process_mode = 2
+script = ExtResource("1_rvq8a")
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(1, 1, 1, 0.701961)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AudioSettings" parent="." instance=ExtResource("1_tsw4v")]
+
+[connection signal="audio_settings_back_button_pressed" from="AudioSettings" to="." method="_on_audio_settings_audio_settings_back_button_pressed"]
